@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_frontend/src/features/login/components/dont_have_account_row.dart';
+import 'package:mobile_frontend/src/features/login/components/login_page_form.dart';
+import 'package:mobile_frontend/src/features/login/components/login_page_header.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -6,12 +9,18 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Expanded(
-        child: Column(
-          children: [
-            Center(child: Text('Hola Mundo'))
-          ],
-        ) 
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                LoginPageHeader(),
+                LoginPageForm(),
+                DontHaveAccountRow()
+              ],
+            ) 
+          ),
+        ),
       ),
     );
   }
