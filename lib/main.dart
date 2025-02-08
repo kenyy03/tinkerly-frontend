@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_frontend/src/config/routes/go_router.dart';
 import 'package:mobile_frontend/src/config/themes/app_theme.dart';
-import 'package:mobile_frontend/src/features/login/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +11,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Tinkerly',
       theme: AppTheme.defaultTheme,
-      home: LoginScreen(),
+      // home: LoginScreen(),
     );
   }
 }
