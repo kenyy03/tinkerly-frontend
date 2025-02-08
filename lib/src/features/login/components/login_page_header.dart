@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_frontend/src/features/common/components/network_image.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 class LoginPageHeader extends StatelessWidget {
@@ -11,9 +10,16 @@ class LoginPageHeader extends StatelessWidget {
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.3,
-          child: const AspectRatio(
+          child: AspectRatio(
             aspectRatio: 1 / 1,
-            child: NetworkImageWithLoader(AppImages.roundedLogo),
+            child: Container(
+              // height: MediaQuery.of(context).size.height * 0.012,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(AppImages.roundedLogo)
+                )
+              ),
+            ),
           ),
         ),
         Text(

@@ -48,11 +48,10 @@ class _LoginPageFormState extends State<LoginPageForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Phone Field
-              const Text("Phone Number"),
+              const Text("Email"),
               const SizedBox(height: 8),
               TextFormField(
-                keyboardType: TextInputType.number,
-                validator: Validators.requiredWithFieldName('Phone').call,
+                validator: Validators.email.call,
                 textInputAction: TextInputAction.next,
                 onSaved: (newValue) {
                   _email = newValue ?? '';
