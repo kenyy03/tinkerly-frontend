@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_frontend/src/config/environment/environment.dart';
 import 'package:mobile_frontend/src/config/routes/go_router.dart';
 import 'package:mobile_frontend/src/config/themes/app_theme.dart';
 
 void main() {
+  Environment.initializeEnvironment();
   runApp(const MyApp());
 }
 
