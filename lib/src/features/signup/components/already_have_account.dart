@@ -15,7 +15,7 @@ class AlreadyHaveAnAccount extends StatelessWidget {
       children: [
         const Text('Already Have Account?'),
         TextButton(
-          onPressed: () => context.pushNamed(AppRoutes.login),
+          onPressed: () => context.push(AppRoutes.login),
           child: const Text('Log In'),
         ),
       ],

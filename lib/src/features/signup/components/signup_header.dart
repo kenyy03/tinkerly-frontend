@@ -13,7 +13,7 @@ class SignUpHeader extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(AppDefaults.padding),
         child: Text(
-          'Welcome to our\ngrocery shop',
+          'Comienza a conectar\ncon personas',
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

@@ -21,9 +21,8 @@ class SignUpButton extends StatelessWidget {
           ),
           const Spacer(),
           ElevatedButton(
-            onPressed: () {
-              print('Navegar a home');
-              // Navigator.pushNamed(context, AppRoutes.numberVerification);
+            onPressed: (){
+              print('navegar al home navigation bar');
             },
             style: ElevatedButton.styleFrom(elevation: 1),
             child: SvgPicture.asset(
