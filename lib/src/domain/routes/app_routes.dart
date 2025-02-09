@@ -5,7 +5,8 @@ class AppRoutes {
 
   /* <---- Login, Signup -----> */
   static const login = '/login';
-  static const signup = '/signup';
+  static const joinAsRole = '/joinAsRole';
+  static const signup = '/signup/:roleId';
   static const loginOrSignup = '/loginOrSignup';
   static const numberVerification = '/numberVerification';
   static const forgotPassword = '/forgotPassword';
