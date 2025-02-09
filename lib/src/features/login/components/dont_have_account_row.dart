@@ -15,7 +15,7 @@ class DontHaveAccountRow extends StatelessWidget {
       children: [
         const Text('Don\'t Have Account?'),
         TextButton(
-          onPressed: () => context.pushNamed(AppRoutes.signup),
+          onPressed: () => context.push(AppRoutes.joinAsRole),
           child: const Text('Sign Up'),
         ),
       ],
