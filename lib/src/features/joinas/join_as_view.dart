@@ -6,6 +6,7 @@ import 'package:mobile_frontend/src/features/joinas/components/role_card.dart';
 import 'package:mobile_frontend/src/features/joinas/cubit/role_radio_button_cubit.dart';
 import 'package:mobile_frontend/src/features/signup/components/already_have_account.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
+import 'package:quickalert/quickalert.dart';
 
 class JoinAsView extends StatelessWidget {
   const JoinAsView({
@@ -92,6 +93,14 @@ class JoinAsView extends StatelessWidget {
                           children: [
                             ElevatedButton(
                               onPressed: () {
+                                if(state.roles.every((a) => !a.isSelected)){
+                                  QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.warning,
+                                    text: 'Es obligatorio que selecciones una opción',
+                                  );
+                                  return;
+                                }
                                 context.push(
                                   AppRoutes.signup.replaceFirst(
                                     ':roleId', 

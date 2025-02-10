@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/config/themes/app_theme.dart';
 import 'package:mobile_frontend/src/domain/routes/app_routes.dart';
 import 'package:mobile_frontend/src/features/login/components/login_button.dart';
@@ -30,7 +31,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
       _key.currentState?.save();
       print('phone $_email');
       print('password $_password');
-      // Navigator.pushNamed(context, AppRoutes.entryPoint);
+      context.pushReplacement(AppRoutes.home);
     }
   }
 
