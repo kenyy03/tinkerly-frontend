@@ -24,14 +24,14 @@ class SignUpForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Names"),
+          const Text("Nombres"),
           const SizedBox(height: 8),
           TextFormField(
             validator: Validators.requiredWithFieldName('Name').call,
             textInputAction: TextInputAction.next,
           ),
           const SizedBox(height: AppDefaults.padding),
-          const Text("LastNames"),
+          const Text("Apellidos"),
           const SizedBox(height: 8),
           TextFormField(
             validator: Validators.requiredWithFieldName('LastName').call,
@@ -45,7 +45,7 @@ class SignUpForm extends StatelessWidget {
             validator: Validators.email.call,
           ),
           const SizedBox(height: AppDefaults.padding),
-          const Text("Phone Number"),
+          const Text("Telefono"),
           const SizedBox(height: 8),
           TextFormField(
             textInputAction: TextInputAction.next,
@@ -54,31 +54,55 @@ class SignUpForm extends StatelessWidget {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
           const SizedBox(height: AppDefaults.padding),
-          const Text("Password"),
-          const SizedBox(height: 8),
-          TextFormField(
-            validator: Validators.required.call,
-            textInputAction: TextInputAction.next,
-            obscureText: true,
-            decoration: InputDecoration(
-              suffixIcon: Material(
-                color: Colors.transparent,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset(
-                    AppIcons.eye,
-                    width: 24,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          _TextFormFieldPassword(),
           // const SizedBox(height: AppDefaults.padding),
           const SignUpButton(),
           const AlreadyHaveAnAccount(),
           // const SizedBox(height: AppDefaults.padding),
         ],
       ),
+    );
+  }
+}
+
+class _TextFormFieldPassword extends StatefulWidget {
+  const _TextFormFieldPassword();
+
+  @override
+  State<_TextFormFieldPassword> createState() => _TextFormFieldPasswordState();
+}
+
+class _TextFormFieldPasswordState extends State<_TextFormFieldPassword> {
+  bool isPasswordShown = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Contraseña"),
+        const SizedBox(height: 8),
+        TextFormField(
+          validator: Validators.required.call,
+          textInputAction: TextInputAction.next,
+          obscureText: isPasswordShown,
+          decoration: InputDecoration(
+            suffixIcon: Material(
+              color: Colors.transparent,
+              child: IconButton(
+                onPressed: () {
+                  isPasswordShown = !isPasswordShown;
+                  setState(() {});
+                },
+                icon: SvgPicture.asset(
+                  AppIcons.eye,
+                  width: 24,
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
