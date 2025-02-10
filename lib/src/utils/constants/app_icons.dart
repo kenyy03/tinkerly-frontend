@@ -38,6 +38,9 @@ class AppIcons {
   static const truckIcon = 'assets/icons/truck_icon.svg';
   static const voucher = 'assets/icons/voucher.svg';
   static const reply = 'assets/icons/reply.svg';
+  static const fileContract = 'assets/icons/file_contract.svg';
+  static const cameraOutlined = 'assets/icons/camera_outlined_icon.svg';
+  static const review = 'assets/icons/review.svg';
 
   static const right = 'assets/icons/right.svg';
   static const profilePerson = 'assets/icons/profile_person.svg';

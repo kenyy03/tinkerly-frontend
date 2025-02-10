@@ -1,0 +1,46 @@
+<svg
+  width="32"
+  height="32"
+  viewBox="0 0 32 32"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Cuadro de comentarios más grande -->
+  <rect
+    x="4"
+    y="5"
+    width="24"
+    height="19"
+    rx="3.5"
+    stroke="#16162E"
+    stroke-width="1"
+  />
+
+  <!-- Líneas de texto simulando reseñas -->
+  <line
+    x1="7"
+    y1="10"
+    x2="25"
+    y2="10"
+    stroke="#16162E"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+  <line
+    x1="7"
+    y1="14"
+    x2="20"
+    y2="14"
+    stroke="#16162E"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+
+  <!-- Estrella verde para representar las reseñas -->
+  <path
+    d="M16 21L13.8 22.3L14.3 19.8L12.5 18.2L15 17.9L16 16L17 17.9L19.5 18.2L17.7 19.8L18.2 22.3L16 21Z"
+    fill="#40AA54"
+    stroke="#16162E"
+    stroke-width="0.5"
+  />
+</svg>
