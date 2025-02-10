@@ -41,7 +41,7 @@ class AppRoutes {
   static const searchResult = '/searchResult';
 
   /* <---- Profile & Settings -----> */
-  static const profile = 'profile';
+  static const profile = '/profile';
   static const myOrder = '/myOrder';
   static const orderDetails = '/orderDetails';
   static const coupon = '/coupon';
