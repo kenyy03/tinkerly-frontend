@@ -3,12 +3,18 @@ class Role {
   final String description;
   final bool isSelected;
 
-  Role({required this.id, required this.description, this.isSelected = false});
+  Role({this.id = '', required this.description, this.isSelected = false});
 
   factory Role.fromMap(Map<String, dynamic> json) => Role(
     id: json["_id"],
     description: json["description"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "description": description,
+    "isSelected": isSelected,
+  };
 
   Role copyWith({String? id, String? description, bool? isSelected}){
     return Role(

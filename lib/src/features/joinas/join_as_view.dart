@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
+import 'package:mobile_frontend/src/domain/stores/role_store.dart';
 import 'package:mobile_frontend/src/features/joinas/components/role_card.dart';
 import 'package:mobile_frontend/src/features/joinas/cubit/role_radio_button_cubit.dart';
 import 'package:mobile_frontend/src/features/signup/components/already_have_account.dart';
@@ -15,6 +16,7 @@ class JoinAsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  final roleStore = RoleStore();
     return Scaffold(
       body: SafeArea(
         child: BlocBuilder<RoleRaddionButtonCubit, RoleRadioButtonState>(
@@ -101,6 +103,7 @@ class JoinAsView extends StatelessWidget {
                                   );
                                   return;
                                 }
+                                roleStore.save('roles', state.roles);
                                 context.push(
                                   AppRoutes.signup.replaceFirst(
                                     ':roleId', 
