@@ -9,7 +9,6 @@ class SignupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(roleId);
     return Scaffold(
       backgroundColor: AppColors.scaffoldWithBoxBackground,
       body: SafeArea(
@@ -19,7 +18,7 @@ class SignupView extends StatelessWidget {
               children: [
                 SignUpHeader(),
                 // SizedBox(height: AppDefaults.padding),
-                SignUpForm()
+                SignUpForm(roleId: roleId)
               ],
             ),
           ),

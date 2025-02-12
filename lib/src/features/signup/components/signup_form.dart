@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobile_frontend/src/domain/domain.dart';
+import 'package:mobile_frontend/src/domain/stores/role_store.dart';
+import 'package:mobile_frontend/src/features/signup/bloc/signup_bloc.dart';
 import 'package:mobile_frontend/src/features/signup/components/already_have_account.dart';
 import 'package:mobile_frontend/src/features/signup/components/signup_button.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 import 'package:mobile_frontend/src/utils/helpers/helper.dart';
 
 class SignUpForm extends StatelessWidget {
+  final String roleId;
   const SignUpForm({
     super.key,
+    this.roleId = '',
   });
 
   @override
@@ -29,6 +35,9 @@ class SignUpForm extends StatelessWidget {
           TextFormField(
             validator: Validators.requiredWithFieldName('Name').call,
             textInputAction: TextInputAction.next,
+            onChanged: (value) {
+              context.read<SignupBloc>().add(NamesOnChanged(names: value));
+            },
           ),
           const SizedBox(height: AppDefaults.padding),
           const Text("Apellidos"),
@@ -36,6 +45,9 @@ class SignUpForm extends StatelessWidget {
           TextFormField(
             validator: Validators.requiredWithFieldName('LastName').call,
             textInputAction: TextInputAction.next,
+            onChanged: (value) {
+              context.read<SignupBloc>().add(LastNamesOnChanged(lastNames: value));
+            },
           ),
           const SizedBox(height: AppDefaults.padding),
           const Text("Email"),
@@ -43,6 +55,9 @@ class SignUpForm extends StatelessWidget {
           TextFormField(
             textInputAction: TextInputAction.next,
             validator: Validators.email.call,
+            onChanged: (value) {
+              context.read<SignupBloc>().add(EmailOnChanged(email: value));
+            },
           ),
           const SizedBox(height: AppDefaults.padding),
           const Text("Telefono"),
@@ -52,9 +67,12 @@ class SignUpForm extends StatelessWidget {
             validator: Validators.required.call,
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            onChanged: (value) {
+              context.read<SignupBloc>().add(PhoneOnChanged(phone: value));
+            },
           ),
           const SizedBox(height: AppDefaults.padding),
-          _TextFormFieldPassword(),
+          _TextFormFieldPassword(roleId),
           // const SizedBox(height: AppDefaults.padding),
           const SignUpButton(),
           const AlreadyHaveAnAccount(),
@@ -66,17 +84,31 @@ class SignUpForm extends StatelessWidget {
 }
 
 class _TextFormFieldPassword extends StatefulWidget {
-  const _TextFormFieldPassword();
+  const _TextFormFieldPassword(this.roleId);
+  final String roleId;
 
   @override
   State<_TextFormFieldPassword> createState() => _TextFormFieldPasswordState();
 }
 
 class _TextFormFieldPasswordState extends State<_TextFormFieldPassword> {
-  bool isPasswordShown = false;
+  bool isPasswordShown = true;
+  final rolesStore = RoleStore();
+  late List<Role>? _rolesStored;
+
+  @override
+  void initState() {
+    loadRoles();
+    super.initState();
+  }
+
+  void loadRoles() async {
+    _rolesStored = await rolesStore.get('roles');
+  }
 
   @override
   Widget build(BuildContext context) {
+    final signUpBloc = BlocProvider.of<SignupBloc>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -101,6 +133,10 @@ class _TextFormFieldPasswordState extends State<_TextFormFieldPassword> {
               ),
             ),
           ),
+          onChanged: (value) async {
+            final role = _rolesStored?.firstWhere((roleStored) => roleStored.id == widget.roleId );
+            signUpBloc.add(PasswordOnChanged(password: value, role: role!));
+          },
         )
       ],
     );

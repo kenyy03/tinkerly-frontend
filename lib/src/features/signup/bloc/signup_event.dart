@@ -8,20 +8,39 @@ sealed class SignupEvent extends Equatable {
 }
 
 class CreateAccountPressed extends SignupEvent {
-  const CreateAccountPressed({
-    required this.names,
-    required this.lastNames, 
-    required this.email, 
-    required this.phone, 
-    required this.password, 
-    required this.role,
-  });
+  const CreateAccountPressed({required this.user});
   
+  final User user;
+}
+
+class NamesOnChanged extends SignupEvent {
   final String names;
+
+  const NamesOnChanged({required this.names});
+}
+
+class LastNamesOnChanged extends SignupEvent {
   final String lastNames;
+
+  const LastNamesOnChanged({required this.lastNames});
+}
+
+class EmailOnChanged extends SignupEvent {
   final String email;
+
+  const EmailOnChanged({required this.email});
+}
+
+class PhoneOnChanged extends SignupEvent {
   final String phone;
+
+  const PhoneOnChanged({required this.phone});
+}
+
+class PasswordOnChanged extends SignupEvent {
   final String password;
-  final String role;
+  final Role role;
+
+  const PasswordOnChanged({required this.password, required this.role});
 }
 
