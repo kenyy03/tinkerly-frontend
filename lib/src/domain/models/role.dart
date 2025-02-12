@@ -8,6 +8,7 @@ class Role {
   factory Role.fromMap(Map<String, dynamic> json) => Role(
     id: json["_id"],
     description: json["description"],
+    isSelected: json['isSelected'] ?? false
   );
 
   Map<String, dynamic> toJson() => {

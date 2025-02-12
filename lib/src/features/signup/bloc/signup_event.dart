@@ -8,9 +8,10 @@ sealed class SignupEvent extends Equatable {
 }
 
 class CreateAccountPressed extends SignupEvent {
-  const CreateAccountPressed({required this.user});
+  // const CreateAccountPressed({required this.user});
+  const CreateAccountPressed();
   
-  final User user;
+  // final User user;
 }
 
 class NamesOnChanged extends SignupEvent {
@@ -39,8 +40,7 @@ class PhoneOnChanged extends SignupEvent {
 
 class PasswordOnChanged extends SignupEvent {
   final String password;
-  final Role role;
 
-  const PasswordOnChanged({required this.password, required this.role});
+  const PasswordOnChanged({required this.password});
 }
 

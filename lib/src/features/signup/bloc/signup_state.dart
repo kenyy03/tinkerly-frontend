@@ -13,7 +13,7 @@ final class SignupInitial extends SignupState {}
 final class SignUpLoading extends SignupState {
   final String mensaje;
 
-  SignUpLoading({this.mensaje='Cargando...'});
+  SignUpLoading({this.mensaje='Cargando...', super.user});
 }
 
 final class SignUpFailure extends SignupState {

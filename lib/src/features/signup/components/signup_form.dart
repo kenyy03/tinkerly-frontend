@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mobile_frontend/src/domain/domain.dart';
-import 'package:mobile_frontend/src/domain/stores/role_store.dart';
 import 'package:mobile_frontend/src/features/signup/bloc/signup_bloc.dart';
 import 'package:mobile_frontend/src/features/signup/components/already_have_account.dart';
 import 'package:mobile_frontend/src/features/signup/components/signup_button.dart';
@@ -93,22 +91,15 @@ class _TextFormFieldPassword extends StatefulWidget {
 
 class _TextFormFieldPasswordState extends State<_TextFormFieldPassword> {
   bool isPasswordShown = true;
-  final rolesStore = RoleStore();
-  late List<Role>? _rolesStored;
 
   @override
   void initState() {
-    loadRoles();
     super.initState();
   }
 
-  void loadRoles() async {
-    _rolesStored = await rolesStore.get('roles');
-  }
 
   @override
   Widget build(BuildContext context) {
-    final signUpBloc = BlocProvider.of<SignupBloc>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -134,8 +125,7 @@ class _TextFormFieldPasswordState extends State<_TextFormFieldPassword> {
             ),
           ),
           onChanged: (value) async {
-            final role = _rolesStored?.firstWhere((roleStored) => roleStored.id == widget.roleId );
-            signUpBloc.add(PasswordOnChanged(password: value, role: role!));
+            context.read<SignupBloc>().add(PasswordOnChanged(password: value));
           },
         )
       ],

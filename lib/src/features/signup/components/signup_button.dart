@@ -8,24 +8,20 @@ import 'package:mobile_frontend/src/utils/constants/constants.dart';
 import 'package:quickalert/quickalert.dart';
 // import 'package:quickalert/quickalert.dart';
 
-class SignUpButton extends StatefulWidget {
+class SignUpButton extends StatelessWidget {
   const SignUpButton({
     super.key,
   });
-
-  @override
-  State<SignUpButton> createState() => _SignUpButtonState();
-}
-
-class _SignUpButtonState extends State<SignUpButton> {
-  late User _user;
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<SignupBloc, SignupState>(
       listener: (context, state) {
         if(state is UserFilled){
-          _user = state.user;
+          print(state.user.names);
+          print(state.user.lastNames);
+          print(state.user.email);
+          print(state.user.phone);
         }
         if(state is UserCreatedSuccess){
           context.pushReplacement(AppRoutes.home);
@@ -49,7 +45,7 @@ class _SignUpButtonState extends State<SignUpButton> {
             ElevatedButton(
               onPressed: () {
                 print('navegar al home navigation bar');
-                context.read<SignupBloc>().add(CreateAccountPressed(user: _user));
+                context.read<SignupBloc>().add(CreateAccountPressed());
               },
               style: ElevatedButton.styleFrom(elevation: 1),
               child: SvgPicture.asset(

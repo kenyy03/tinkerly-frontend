@@ -19,8 +19,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   void _createAccount(CreateAccountPressed event, Emitter<SignupState> emit) async {
     try {
-      emit(SignUpLoading(mensaje: 'Creando nuevo usuario...'));
-      final response = await _repository.signUp(user: event.user);
+      print(state.user.names);
+      emit(SignUpLoading(mensaje: 'Creando nuevo usuario...', user: state.user));
+      final response = await _repository.signUp(user: state.user);
       emit(UserCreatedSuccess(user: response));
     } catch (e) {
       emit(SignUpFailure(mensajeError: e.toString()));
@@ -44,6 +45,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   }
 
   void _passwordChanged(PasswordOnChanged event, Emitter<SignupState> emit){
-    emit(UserFilled(user: state.user.copyWith(password: event.password, role: event.role)));
+    emit(UserFilled(user: state.user.copyWith(password: event.password)));
   }
 }
