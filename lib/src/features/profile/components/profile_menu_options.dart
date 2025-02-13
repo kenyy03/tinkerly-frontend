@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/profile/components/profile_list_tile.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
@@ -47,7 +48,7 @@ class ProfileMenuOptions extends StatelessWidget {
           ProfileListTile(
             title: 'Logout',
             icon: AppIcons.profileLogout,
-            onTap: () => Navigator.pushNamed(context, AppRoutes.loginOrSignup),
+            onTap: () => context.pushReplacement(AppRoutes.login),
           ),
         ],
       ),
