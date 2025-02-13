@@ -11,7 +11,7 @@ class RoleDatasource extends IRoleDataSource {
       Uri uri = Uri.parse('${environment.baseUrl}/get-all-roles');
       final response = await http.get(uri);
       if(response.statusCode != 200){
-        return Future.error('Error al obtener los datos');
+        return Future.error(json.decode(response.body)['message']);
       }
 
       var jsonResponse = json.decode(response.body) as Map<String,dynamic>;
