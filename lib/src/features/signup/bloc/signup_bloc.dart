@@ -19,7 +19,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   void _createAccount(CreateAccountPressed event, Emitter<SignupState> emit) async {
     try {
-      print(state.user.names);
       emit(SignUpLoading(mensaje: 'Creando nuevo usuario...', user: state.user));
       final response = await _repository.signUp(user: state.user);
       emit(UserCreatedSuccess(user: response));
