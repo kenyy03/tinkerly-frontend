@@ -6,6 +6,7 @@ import 'package:mobile_frontend/src/features/entrypoint/entry_point_ui.dart';
 import 'package:mobile_frontend/src/features/home/home_screen.dart';
 import 'package:mobile_frontend/src/features/joinas/cubit/role_radio_button_cubit.dart';
 import 'package:mobile_frontend/src/features/joinas/join_as_screen.dart';
+import 'package:mobile_frontend/src/features/login/bloc/login_bloc.dart';
 import 'package:mobile_frontend/src/features/login/login_screen.dart';
 import 'package:mobile_frontend/src/features/profile/profile_screen.dart';
 import 'package:mobile_frontend/src/features/signup/bloc/signup_bloc.dart';
@@ -19,7 +20,10 @@ final router = GoRouter(
       name: LoginScreen
           .routeName, // Optional, add name to your routes. Allows you navigate by name instead of path
       path: AppRoutes.login,
-      builder: (context, state) => LoginScreen(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => LoginBloc(AuthRepository(datasource: AuthDataSource())),
+        child: LoginScreen(),
+      ),
     ),
     GoRoute(
       name: SignUpScreen.routeName,
