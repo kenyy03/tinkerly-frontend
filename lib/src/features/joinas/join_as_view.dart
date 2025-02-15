@@ -19,7 +19,7 @@ class JoinAsView extends StatelessWidget {
   final roleStore = RoleStore();
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<RoleRaddionButtonCubit, RoleRadioButtonState>(
+        child: BlocBuilder<RoleRadioButtonCubit, RoleRadioButtonState>(
           builder: (context, state) {
             return Center(
               child: Container(
@@ -78,7 +78,7 @@ class JoinAsView extends StatelessWidget {
                                   }).toList();
 
                                   context
-                                      .read<RoleRaddionButtonCubit>()
+                                      .read<RoleRadioButtonCubit>()
                                       .selectRadioButton(
                                           roles: rolesWithValueSelected);
                                 },
