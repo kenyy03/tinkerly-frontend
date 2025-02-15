@@ -4,8 +4,8 @@ import 'package:mobile_frontend/src/domain/domain.dart';
 
 part 'role_radio_button_state.dart';
 
-class RoleRaddionButtonCubit extends Cubit<RoleRadioButtonState> {
-  RoleRaddionButtonCubit(IRoleRepository repository) 
+class RoleRadioButtonCubit extends Cubit<RoleRadioButtonState> {
+  RoleRadioButtonCubit(IRoleRepository repository) 
     : _repository=repository, super(RoleRadioButtonInitial()) ;
   
   final IRoleRepository _repository;
