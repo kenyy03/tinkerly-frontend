@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_frontend/src/domain/domain.dart';
+import 'package:mobile_frontend/src/domain/stores/user_store.dart';
 import 'package:mobile_frontend/src/features/common/components/network_image.dart';
 import 'package:mobile_frontend/src/features/profile/components/profile_header_options.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
@@ -43,8 +45,32 @@ class ProfileHeader extends StatelessWidget {
   }
 }
 
-class _UserData extends StatelessWidget {
+class _UserData extends StatefulWidget {
   const _UserData();
+
+  @override
+  State<_UserData> createState() => _UserDataState();
+}
+
+class _UserDataState extends State<_UserData> {
+  final userStored = UserStorage();
+  User? currentUser = User(
+    names: '', 
+    lastNames: '', 
+    email: '', 
+    password: '', 
+    phone: ''
+  );
+@override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  void loadUser() async {
+    currentUser =  await userStored.get('user');
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +86,7 @@ class _UserData extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 1 / 1,
                 child: NetworkImageWithLoader(
-                  'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
+                  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                 )
               ),
             ),
@@ -70,13 +96,13 @@ class _UserData extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Carlos Garcia',
+                '${currentUser?.names} ${currentUser?.lastNames}',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold, color: Colors.white),
               ),
               const SizedBox(height: 8),
               Text(
-                'ID: 1540580',
+                'Tipo: ${currentUser?.role.description}',
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge

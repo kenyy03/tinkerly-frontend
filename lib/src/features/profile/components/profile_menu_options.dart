@@ -30,7 +30,7 @@ class ProfileMenuOptions extends StatelessWidget {
           ProfileListTile(
             title: 'Dirección',
             icon: AppIcons.homeProfile,
-            onTap: () => Navigator.pushNamed(context, AppRoutes.notifications),
+            onTap: () => context.push(AppRoutes.newAddress),
           ),
           const Divider(thickness: 0.1),
           ProfileListTile(
