@@ -9,6 +9,8 @@ import 'package:mobile_frontend/src/features/joinas/join_as_screen.dart';
 import 'package:mobile_frontend/src/features/login/bloc/login_bloc.dart';
 import 'package:mobile_frontend/src/features/login/login_screen.dart';
 import 'package:mobile_frontend/src/features/profile/profile_screen.dart';
+import 'package:mobile_frontend/src/features/profile/screens/directions/bloc/address_bloc.dart';
+import 'package:mobile_frontend/src/features/profile/screens/directions/directions_screen.dart';
 import 'package:mobile_frontend/src/features/signup/bloc/signup_bloc.dart';
 import 'package:mobile_frontend/src/features/signup/signup_screen.dart';
 
@@ -21,7 +23,8 @@ final router = GoRouter(
           .routeName, // Optional, add name to your routes. Allows you navigate by name instead of path
       path: AppRoutes.login,
       builder: (context, state) => BlocProvider(
-        create: (context) => LoginBloc(AuthRepository(datasource: AuthDataSource())),
+        create: (context) =>
+            LoginBloc(AuthRepository(datasource: AuthDataSource())),
         child: LoginScreen(),
       ),
     ),
@@ -31,7 +34,8 @@ final router = GoRouter(
       builder: (context, state) {
         final String roleId = state.pathParameters['roleId'] ?? 'no-id';
         return BlocProvider(
-          create: (context) => SignupBloc(AuthRepository(datasource: AuthDataSource())),
+          create: (context) =>
+              SignupBloc(AuthRepository(datasource: AuthDataSource())),
           child: SignUpScreen(roleId: roleId),
         );
       },
@@ -41,10 +45,22 @@ final router = GoRouter(
       path: AppRoutes.joinAsRole,
       builder: (context, state) => BlocProvider(
         create: (context) =>
-            RoleRaddionButtonCubit(RoleRepository(dataSource: RoleDatasource()))
+            RoleRadioButtonCubit(RoleRepository(dataSource: RoleDatasource()))
               ..getRoles(),
         child: JoinAsScreen(),
       ),
+    ),
+    GoRoute(
+      name: DirectionsScreen.routeName,
+      path: AppRoutes.newAddress,
+      builder: (context, state) {
+        return BlocProvider(
+          create: (context) => AddressBloc(
+            CityRepository(dataSource: CityDataSource())
+          )..add(LoadCities()),
+          child: DirectionsScreen(),
+        );
+      },
     ),
     StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
