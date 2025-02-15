@@ -33,15 +33,14 @@ class User {
   );
 
   Map<String, dynamic> toJson() => {
-    // "_id": id,
+    "_id": id,
     "names": names,
     "lastNames": lastNames,
     "email": email,
     "password": password,
     "phone": phone,
     "description": description,
-    'roleId': role.id,
-    // "role": role?.toJson(),  // Convierte role a JSON solo si no es null
+    'roleId': role.toJson(),
   };
 
   User copyWith({
