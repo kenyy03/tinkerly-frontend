@@ -1,7 +1,15 @@
 export 'abstractions/datasources/irole_datasource.dart';
 export 'abstractions/datasources/iauth_datasource.dart';
+export 'abstractions/datasources/icity_datasource.dart';
 export './models/role.dart';
 export './models/user.dart';
+export './models/city.dart';
+export './models/address.dart';
+export './models/ability.dart';
+export './models/ocupation.dart';
+export './models/review.dart';
+export './models/user_ocupation.dart';
 export 'abstractions/repositories/irole_repository.dart';
 export 'abstractions/repositories/iauth_repository.dart';
+export 'abstractions/repositories/icity_repository.dart';
 export './routes/app_routes.dart';
