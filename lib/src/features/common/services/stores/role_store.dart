@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:mobile_frontend/src/config/storage/shared_prefs.dart';
-import 'package:mobile_frontend/src/domain/abstractions/storage_service.dart';
+import 'package:mobile_frontend/src/domain/abstractions/istorage_service.dart';
 
-import '../models/role.dart';
+import '../../../../domain/models/role.dart';
 
-class RoleStore implements StorageService<List<Role>> {
+class RoleStore implements IStorageService<List<Role>> {
   // static const String _key = 'roles';
 
   @override
@@ -15,7 +15,7 @@ class RoleStore implements StorageService<List<Role>> {
   }
 
   @override
-  Future<List<Role>?> get(String key) async {
+  List<Role>? get(String key) {
     final prefs = SharedPrefs.instance;
     String? data = prefs.getString(key);
     if (data != null) {

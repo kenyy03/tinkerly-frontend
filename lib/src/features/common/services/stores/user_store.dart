@@ -1,10 +1,10 @@
+
+import '../../../../domain/models/user.dart';
 import 'dart:convert';
 import 'package:mobile_frontend/src/config/storage/shared_prefs.dart';
-import 'package:mobile_frontend/src/domain/abstractions/storage_service.dart';
+import 'package:mobile_frontend/src/domain/abstractions/istorage_service.dart';
 
-import '../models/user.dart';
-
-class UserStorage implements StorageService<User> {
+class UserStorage implements IStorageService<User> {
   @override
   Future<void> save(String key, User user) async {
     final prefs = SharedPrefs.instance;
@@ -13,7 +13,7 @@ class UserStorage implements StorageService<User> {
   }
 
   @override
-  Future<User?> get(String key) async {
+  User? get(String key)  {
     final prefs = SharedPrefs.instance;
     String? data = prefs.getString(key);
     if (data != null) {
