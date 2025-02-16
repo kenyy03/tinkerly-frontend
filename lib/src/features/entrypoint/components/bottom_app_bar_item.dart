@@ -20,8 +20,9 @@ class BottomAppBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: AppDefaults.padding),
+        width: MediaQuery.of(context).size.width / 2.2,
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           children: [

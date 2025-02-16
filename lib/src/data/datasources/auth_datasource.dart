@@ -1,18 +1,18 @@
 
-import 'dart:convert';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:mobile_frontend/src/config/environment/environment.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
-import 'package:http/http.dart' as http;
-import 'package:mobile_frontend/src/domain/stores/role_store.dart';
-import 'package:mobile_frontend/src/domain/stores/user_store.dart';
+import 'package:mobile_frontend/src/features/common/services/stores/role_store.dart';
+import 'package:mobile_frontend/src/features/common/services/stores/user_store.dart';
 
 class AuthDataSource extends IAuthDataSource {
   @override
   Future<User> signUp({required User user}) async {
     try {
       RoleStore stored = RoleStore();
-      final roles = await stored.get('roles');
+      final roles = stored.get('roles');
       final roleSelected = roles!.firstWhere((role) => role.isSelected);
       final userRequest = user.copyWith(role: roleSelected);
       Uri uri = Uri.parse('${environment.baseUrl}/signup');
