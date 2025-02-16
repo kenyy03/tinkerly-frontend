@@ -47,7 +47,7 @@ class AppRoutes {
   static const coupon = '/coupon';
   static const couponDetails = '/couponDetails';
   static const deliveryAddress = '/deliveryAddress';
-  static const newAddress = '/newAddress';
+  static const newAddress = '/newAddress/:userId';
   static const orderTracking = '/orderTracking';
   static const profileEdit = '/profileEdit';
   static const notifications = '/notifications';

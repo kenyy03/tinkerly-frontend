@@ -8,8 +8,8 @@ class City {
   });
 
   factory City.fromMap(Map<String, dynamic> json) => City(
-    id: json["_id"],
-    description: json["description"],
+    id: json["_id"] ?? '',
+    description: json["description"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {

@@ -16,11 +16,11 @@ class Address {
   }) : city = city ?? City(description: '');
 
   factory Address.fromMap(Map<String, dynamic> json) => Address(
-    id: json["_id"],
-    userId: json['userId'],
-    neighborhood: json['neighborhood'],
-    directions: json['directions'],
-    city: City.fromMap(json['cityId'])
+    id: json["_id"] ?? '',
+    userId: json['userId'] ?? '',
+    neighborhood: json['neighborhood'] ?? '',
+    directions: json['directions'] ?? '',
+    city: City.fromMap(json['cityId'] ?? {})
   );
 
   Map<String, dynamic> toJson() => {
