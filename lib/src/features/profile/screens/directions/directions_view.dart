@@ -1,8 +1,6 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/profile/screens/directions/bloc/address_bloc.dart';
@@ -11,7 +9,8 @@ import 'package:mobile_frontend/src/utils/helpers/helper.dart';
 import 'package:quickalert/quickalert.dart';
 
 class DirectionsView extends StatelessWidget {
-  DirectionsView({super.key});
+  DirectionsView({super.key, required this.currentUserId});
+  final String currentUserId;
 
   final TextEditingController _neighborhoodController = TextEditingController();
   final TextEditingController _directionsController = TextEditingController();
@@ -20,15 +19,23 @@ class DirectionsView extends StatelessWidget {
   Widget build(BuildContext context) {
     void saveDirection(Address address) {
       if(address.city.id.isEmpty){
-        print('City es nulo');
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          text: 'Es obligatorio seleccionar una Ciudad'
+        );
         return;
       }
 
       if(address.directions.isEmpty){
-        print('Direccion es nulo');
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          text: 'Es obligatorio llenar las indicaciones de la dirección'
+        );
         return;
       }
-      print(json.encode(address.toJson()));
+      context.read<AddressBloc>().add(SaveAddress(address: address));
     } 
 
     return Scaffold(
@@ -48,9 +55,16 @@ class DirectionsView extends StatelessWidget {
               text: state.messageError
             );
           }
+          if(state is AddressUpdated){
+            context.read<AddressBloc>().add(GetAddressByUserId(userId: currentUserId));
+          }
         },
         child: BlocBuilder<AddressBloc, AddressState>(
           builder: (context, state) {
+            Future.delayed(Duration(microseconds: 200), (){
+              _directionsController.text = state.address.directions;
+              _neighborhoodController.text = state.address.neighborhood;
+            });
             return SafeArea(
               child: SingleChildScrollView(
                   child: Column(
@@ -97,6 +111,7 @@ class DirectionsView extends StatelessWidget {
                           builder: (context, controller, focusNode) {
                             controller.text = state.address.city.description;
                             return TextFormField(
+                              enabled: state is! AddressLoading,
                               validator: Validators.requiredWithFieldName('City').call,
                               textInputAction: TextInputAction.next,
                               controller: controller,
@@ -118,6 +133,7 @@ class DirectionsView extends StatelessWidget {
                         const Text("Barrio / Colonia / Sector"),
                         const SizedBox(height: 8),
                         TextFormField(
+                          enabled: (state is! AddressLoading),
                           validator:
                               Validators.requiredWithFieldName('Neighborhood')
                                   .call,
@@ -133,6 +149,7 @@ class DirectionsView extends StatelessWidget {
                             "Referencias / Indicaciones de la direccion"),
                         const SizedBox(height: 8),
                         TextFormField(
+                          enabled: state is! AddressLoading ,
                           maxLines: 2,
                           textInputAction: TextInputAction.done,
                           validator:
@@ -147,6 +164,7 @@ class DirectionsView extends StatelessWidget {
                           onFieldSubmitted: (_) => saveDirection(state.address),
                         ),
                         const SizedBox(height: AppDefaults.padding * 4),
+                        state is! AddressLoading ?
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
@@ -154,6 +172,17 @@ class DirectionsView extends StatelessWidget {
                             child: Text('Guardar Dirección'),
                             // icon: Icon(Icons.save),
                           ),
+                        ) : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(state.message),
+                                CircularProgressIndicator()
+                              ],
+                            ),
+                          ],
                         )
                       ],
                     ),

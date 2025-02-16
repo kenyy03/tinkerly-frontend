@@ -26,3 +26,14 @@ final class CityOnChanged extends AddressEvent {
 
   const CityOnChanged({required this.city});
 }
+
+final class GetAddressByUserId extends AddressEvent {
+  final String userId;
+  const GetAddressByUserId({required this.userId});
+}
+
+final class SaveAddress extends AddressEvent {
+  final Address address;
+
+  const SaveAddress({required this.address});
+}

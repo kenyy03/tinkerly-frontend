@@ -13,7 +13,7 @@ final class AddressInitial extends AddressState {}
 final class AddressLoading extends AddressState {
   final String message;
 
-  AddressLoading({this.message = 'Obteniendo ciudades...'});
+  AddressLoading({this.message = 'Obteniendo ciudades...', super.cities});
 }
 
 final class AddressFailure extends AddressState {
@@ -28,4 +28,12 @@ final class CitiesObtained extends AddressState {
 
 final class AddressFilled extends AddressState {
   AddressFilled({super.address, super.cities});
+}
+
+final class AddressObtained extends AddressState {
+  AddressObtained({super.address, super.cities});
+}
+
+final class AddressUpdated extends AddressState {
+  AddressUpdated({super.cities});
 }
