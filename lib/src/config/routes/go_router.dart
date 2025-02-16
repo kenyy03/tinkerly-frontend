@@ -54,11 +54,14 @@ final router = GoRouter(
       name: DirectionsScreen.routeName,
       path: AppRoutes.newAddress,
       builder: (context, state) {
+        final String userId = state.pathParameters['userId'] ?? 'no-id';
         return BlocProvider(
           create: (context) => AddressBloc(
-            CityRepository(dataSource: CityDataSource())
-          )..add(LoadCities()),
-          child: DirectionsScreen(),
+            CityRepository(dataSource: CityDataSource()),
+            AddressRepository(dataSource: AddressDataSource()),
+          )..add(LoadCities())
+          ..add(GetAddressByUserId(userId: userId)),
+          child: DirectionsScreen(currentUserId: userId),
         );
       },
     ),
