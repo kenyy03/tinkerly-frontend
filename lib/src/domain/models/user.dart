@@ -1,4 +1,5 @@
 import 'package:mobile_frontend/src/domain/domain.dart';
+import 'package:mobile_frontend/src/domain/models/image_profile.dart';
 
 class User {
   final String id;
@@ -9,6 +10,7 @@ class User {
   final String phone;
   final String description;
   final Role role;
+  final ImageProfile imageProfile;
 
   User({
     this.id = '',
@@ -18,8 +20,10 @@ class User {
     required this.password, 
     required this.phone, 
     this.description = '',
-    Role? role
-  }) : role = role ?? Role(description: '') ;
+    Role? role,
+    ImageProfile? imageProfile,
+  }) : role = role ?? Role(description: ''),
+   imageProfile = imageProfile ?? ImageProfile();
 
   factory User.fromMap(Map<String, dynamic> json) => User(
     id: json["_id"],
@@ -29,7 +33,8 @@ class User {
     password: json['password'] ?? '',
     phone: json['phone'],
     description: json["description"],
-    role: Role.fromMap(json['roleId'])
+    role: Role.fromMap(json['roleId']),
+    imageProfile: ImageProfile.fromMap(json['imageProfile'] ?? ImageProfile()),
   );
 
   Map<String, dynamic> toJson() => {
@@ -41,6 +46,7 @@ class User {
     "phone": phone,
     "description": description,
     'roleId': role.toJson(),
+    'imageProfile': imageProfile.toJson()
   };
 
   User copyWith({
@@ -52,6 +58,7 @@ class User {
     ,String? phone
     ,String? description
     ,Role? role
+    ,ImageProfile? imageProfile
   }){
     return User(
       id: id ?? this.id,
@@ -61,7 +68,8 @@ class User {
       password: password ?? this.password, 
       phone: phone ?? this.phone, 
       description: description ?? this.description,
-      role: role ?? this.role
+      role: role ?? this.role,
+      imageProfile: imageProfile ?? imageProfile
     );
   }
   
