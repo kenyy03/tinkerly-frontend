@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
+import 'package:mobile_frontend/src/features/common/services/stores/role_store.dart';
+import 'package:mobile_frontend/src/features/common/services/stores/user_store.dart';
 import 'package:mobile_frontend/src/features/profile/components/profile_list_tile.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 class ProfileMenuOptions extends StatelessWidget {
-  const ProfileMenuOptions({
+  ProfileMenuOptions({
     super.key,
   });
+
+  final userStored = UserStorage();
+  final roleStored = RoleStore();
 
   @override
   Widget build(BuildContext context) {
@@ -24,31 +29,40 @@ class ProfileMenuOptions extends StatelessWidget {
           ProfileListTile(
             title: 'Mi Perfil',
             icon: AppIcons.profilePerson,
-            onTap: () => Navigator.pushNamed(context, AppRoutes.profileEdit),
+            onTap: () => context.push(AppRoutes.profileEdit),
           ),
           const Divider(thickness: 0.1),
           ProfileListTile(
             title: 'Dirección',
             icon: AppIcons.homeProfile,
-            onTap: () => context.push(AppRoutes.newAddress),
+            onTap: () {
+              final currentUser = userStored.get('user');
+              context.push(
+                AppRoutes.newAddress.replaceFirst(':userId', currentUser!.id)
+              );
+            },
           ),
           const Divider(thickness: 0.1),
           ProfileListTile(
             title: 'Configuración',
             icon: AppIcons.profileSetting,
-            onTap: () => Navigator.pushNamed(context, AppRoutes.settings),
+            onTap: () => context.push(AppRoutes.settings),
           ),
           const Divider(thickness: 0.1),
-          ProfileListTile(
-            title: 'Payment',
-            icon: AppIcons.profilePayment,
-            onTap: () => Navigator.pushNamed(context, AppRoutes.paymentMethod),
-          ),
+          // ProfileListTile(
+          //   title: 'Payment',
+          //   icon: AppIcons.profilePayment,
+          //   onTap: () => context.push(AppRoutes.paymentMethod),
+          // ),
           const Divider(thickness: 0.1),
           ProfileListTile(
             title: 'Logout',
             icon: AppIcons.profileLogout,
-            onTap: () => context.pushReplacement(AppRoutes.login),
+            onTap: () {
+              userStored.remove('user');
+              roleStored.remove('roles');
+              context.pushReplacement(AppRoutes.login);
+            },
           ),
         ],
       ),
