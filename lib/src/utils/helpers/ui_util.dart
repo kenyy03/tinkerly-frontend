@@ -7,13 +7,13 @@ class UiUtil {
   static Future openBottomSheet({
     required BuildContext context,
     required Widget widget,
+    BoxConstraints? constraints, 
   }) async {
-    await showModalBottomSheet(
+    return await showModalBottomSheet(
       context: context,
       builder: (ctx) => widget,
       isScrollControlled: true,
-      constraints:
-          BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.85),
+      constraints: constraints,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: AppDefaults.bottomSheetRadius,
