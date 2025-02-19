@@ -8,6 +8,7 @@ import 'package:mobile_frontend/src/features/joinas/cubit/role_radio_button_cubi
 import 'package:mobile_frontend/src/features/joinas/join_as_screen.dart';
 import 'package:mobile_frontend/src/features/login/bloc/login_bloc.dart';
 import 'package:mobile_frontend/src/features/login/login_screen.dart';
+import 'package:mobile_frontend/src/features/profile/cubit/image_picker_profile_cubit.dart';
 import 'package:mobile_frontend/src/features/profile/profile_screen.dart';
 import 'package:mobile_frontend/src/features/profile/screens/directions/bloc/address_bloc.dart';
 import 'package:mobile_frontend/src/features/profile/screens/directions/directions_screen.dart';
@@ -59,15 +60,19 @@ final router = GoRouter(
           create: (context) => AddressBloc(
             CityRepository(dataSource: CityDataSource()),
             AddressRepository(dataSource: AddressDataSource()),
-          )..add(LoadCities())
-          ..add(GetAddressByUserId(userId: userId)),
+          )
+            ..add(LoadCities())
+            ..add(GetAddressByUserId(userId: userId)),
           child: DirectionsScreen(currentUserId: userId),
         );
       },
     ),
     StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
-          return EntryPointUi(navigationShell: navigationShell);
+          return BlocProvider(
+            create: (_) => ImagePickerProfileCubit(repository: AuthRepository(datasource: AuthDataSource())),
+            child: EntryPointUi(navigationShell: navigationShell),
+          );
         },
         branches: [
           StatefulShellBranch(routes: [
