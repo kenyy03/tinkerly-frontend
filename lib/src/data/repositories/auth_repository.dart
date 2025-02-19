@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mobile_frontend/src/domain/domain.dart';
 
 class AuthRepository extends IAuthRepository {
@@ -13,5 +15,10 @@ class AuthRepository extends IAuthRepository {
   @override
   Future<User> login({required String email, required String password}) {
     return _datasource.login(email: email, password: password);
+  }
+
+  @override
+  Future<User> uploadImageProfile({required File file, required String id}) {
+    return _datasource.uploadImageProfile(file: file, id: id);
   }
 }
