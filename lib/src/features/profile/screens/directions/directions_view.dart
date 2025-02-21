@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
+import 'package:mobile_frontend/src/features/common/components/app_back_button.dart';
 import 'package:mobile_frontend/src/features/profile/screens/directions/bloc/address_bloc.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 import 'package:mobile_frontend/src/utils/helpers/helper.dart';
@@ -40,8 +40,7 @@ class DirectionsView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          leading: IconButton(
-              onPressed: () => context.pop(), icon: Icon(Icons.arrow_back_ios)),
+          leading: const AppBackButton(),
           title: Text('Dirección')),
       backgroundColor: AppColors.cardColor,
       body: BlocListener<AddressBloc, AddressState>(
