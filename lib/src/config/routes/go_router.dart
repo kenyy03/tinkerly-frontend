@@ -12,6 +12,8 @@ import 'package:mobile_frontend/src/features/profile/cubit/image_picker_profile_
 import 'package:mobile_frontend/src/features/profile/profile_screen.dart';
 import 'package:mobile_frontend/src/features/profile/screens/directions/bloc/address_bloc.dart';
 import 'package:mobile_frontend/src/features/profile/screens/directions/directions_screen.dart';
+import 'package:mobile_frontend/src/features/profile/screens/myprofile/bloc/myprofile_edit_bloc.dart';
+import 'package:mobile_frontend/src/features/profile/screens/myprofile/profile_edit_screen.dart';
 import 'package:mobile_frontend/src/features/signup/bloc/signup_bloc.dart';
 import 'package:mobile_frontend/src/features/signup/signup_screen.dart';
 
@@ -51,26 +53,26 @@ final router = GoRouter(
         child: JoinAsScreen(),
       ),
     ),
-    GoRoute(
-      name: DirectionsScreen.routeName,
-      path: AppRoutes.newAddress,
-      builder: (context, state) {
-        final String userId = state.pathParameters['userId'] ?? 'no-id';
-        return BlocProvider(
-          create: (context) => AddressBloc(
-            CityRepository(dataSource: CityDataSource()),
-            AddressRepository(dataSource: AddressDataSource()),
-          )
-            ..add(LoadCities())
-            ..add(GetAddressByUserId(userId: userId)),
-          child: DirectionsScreen(currentUserId: userId),
-        );
-      },
-    ),
     StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
-          return BlocProvider(
-            create: (_) => ImagePickerProfileCubit(repository: AuthRepository(datasource: AuthDataSource())),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => ImagePickerProfileCubit(
+                    repository: AuthRepository(datasource: AuthDataSource())),
+              ),
+              BlocProvider(
+                create: (context) => AddressBloc(
+                  CityRepository(dataSource: CityDataSource()),
+                  AddressRepository(dataSource: AddressDataSource())
+                ),
+              ),
+              BlocProvider(
+                create: (context) => MyprofileEditBloc(
+                  ocupationRepository: OcupationRepository(dataSource: OcupationDataSource())
+                )
+              )
+            ],
             child: EntryPointUi(navigationShell: navigationShell),
           );
         },
@@ -85,7 +87,28 @@ final router = GoRouter(
             GoRoute(
                 name: ProfileScreen.routeName,
                 path: AppRoutes.profile,
-                builder: (context, state) => ProfileScreen())
+                builder: (context, state) => ProfileScreen(),
+                routes: [
+                  GoRoute(
+                    name: ProfileEditScreen.routeName,
+                    path: AppRoutes.profileEdit,
+                    builder: (context, state) {
+                      context.read<MyprofileEditBloc>().add(LoadOcupations());
+                      return ProfileEditScreen();
+                    },
+                  ),
+                  GoRoute(
+                    name: DirectionsScreen.routeName,
+                    path: AppRoutes.newAddress,
+                    builder: (context, state) {
+                      final String userId =
+                          state.pathParameters['userId'] ?? 'no-id';
+                          context.read<AddressBloc>().add(LoadCities());
+                          context.read<AddressBloc>().add(GetAddressByUserId(userId: userId));
+                          return DirectionsScreen(currentUserId: userId);
+                    },
+                  ),
+                ])
           ]),
         ])
   ],
