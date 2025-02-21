@@ -68,13 +68,7 @@ class _ManagmentProfilePhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void openCameraToTakePhoto() async {
-      String? imagePath;
-      // Future.delayed(Duration(milliseconds: 50), () async {
-      //   imagePath = await _imagePicker.takePhoto();
-      // });
-
-      // Future.delayed(Duration(milliseconds: 100));
-      imagePath = await _imagePicker.takePhoto();
+      String? imagePath = await _imagePicker.takePhoto();
       if (context.mounted) {
         context.pop(imagePath);
       }
