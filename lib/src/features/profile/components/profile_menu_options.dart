@@ -29,7 +29,7 @@ class ProfileMenuOptions extends StatelessWidget {
           ProfileListTile(
             title: 'Mi Perfil',
             icon: AppIcons.profilePerson,
-            onTap: () => context.push(AppRoutes.profileEdit),
+            onTap: () => context.push('${AppRoutes.profile}${AppRoutes.profileEdit}'),
           ),
           const Divider(thickness: 0.1),
           ProfileListTile(
@@ -38,7 +38,7 @@ class ProfileMenuOptions extends StatelessWidget {
             onTap: () {
               final currentUser = userStored.get('user');
               context.push(
-                AppRoutes.newAddress.replaceFirst(':userId', currentUser!.id)
+                '${AppRoutes.profile}${AppRoutes.newAddress.replaceFirst(':userId', currentUser!.id)}'
               );
             },
           ),
