@@ -49,7 +49,7 @@ class AppRoutes {
   static const deliveryAddress = '/deliveryAddress';
   static const newAddress = '/newAddress/:userId';
   static const orderTracking = '/orderTracking';
-  static const profileEdit = '/profileEdit';
+  static const profileEdit = '/profileEdit/:userId';
   static const notifications = '/notifications';
   static const settings = '/settings';
   static const settingsLanguage = '/settingsLanguage';
