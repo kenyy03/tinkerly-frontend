@@ -16,6 +16,7 @@ class ProfileMenuOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = userStored.get('user');
     return Container(
       margin: const EdgeInsets.all(AppDefaults.padding),
       padding: const EdgeInsets.all(AppDefaults.padding),
@@ -29,14 +30,13 @@ class ProfileMenuOptions extends StatelessWidget {
           ProfileListTile(
             title: 'Mi Perfil',
             icon: AppIcons.profilePerson,
-            onTap: () => context.push('${AppRoutes.profile}${AppRoutes.profileEdit}'),
+            onTap: () => context.push('${AppRoutes.profile}${AppRoutes.profileEdit.replaceFirst(':userId', currentUser!.id)}'),
           ),
           const Divider(thickness: 0.1),
           ProfileListTile(
             title: 'Dirección',
             icon: AppIcons.homeProfile,
             onTap: () {
-              final currentUser = userStored.get('user');
               context.push(
                 '${AppRoutes.profile}${AppRoutes.newAddress.replaceFirst(':userId', currentUser!.id)}'
               );
