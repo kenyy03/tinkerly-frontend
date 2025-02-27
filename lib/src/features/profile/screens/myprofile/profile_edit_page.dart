@@ -77,6 +77,63 @@ class ProfileEditPage extends StatelessWidget {
 
             final myAbilities = getMyAbilities();
             
+            onChangedNames(String nombre) {
+                        context
+                            .read<MyprofileEditBloc>()
+                            .add(NamesOnChanged(names: nombre));
+                      }
+            onChangedDescription(String description) {
+                        context.read<MyprofileEditBloc>().add(
+                            DescriptionOnChanged(description: description));
+                      }
+            onChangedLastNames(apellidos) {
+                        context
+                            .read<MyprofileEditBloc>()
+                            .add(LastNamesOnChanged(lastNames: apellidos));
+                      }
+            onChangedPhone(telefono) {
+                        context
+                            .read<MyprofileEditBloc>()
+                            .add(PhoneOnChanged(phone: telefono));
+                      }
+            onTapSearchOcupation() async {
+                        final Ocupation? result = await UiUtil.openBottomSheet(
+                            context: context,
+                            constraints: BoxConstraints(
+                                maxHeight:
+                                    MediaQuery.of(context).size.height * 0.8),
+                            widget: _SearchOcupation());
+                        _ocupationController.text = result?.description ?? '';
+                      }
+            onPressedShowAllAbilities() {
+              context.read<MyprofileEditBloc>().add(ShowAllAbilitiesOnPress(showAll: true));
+            }
+            onPressedAddAbilitiesBottomSheet() async {
+                          await UiUtil.openBottomSheet(
+                              context: context,
+                              constraints: BoxConstraints(
+                                  maxHeight:
+                                      MediaQuery.of(context).size.height * 0.8),
+                              widget: _AddAbilities(userId: currentUser!.id));
+                        }
+            onPressedSaveMyProfileChanges() {
+                          context.read<MyprofileEditBloc>().add(
+                            UpdateUserSaved(user: state.user)
+                          );
+                          context.read<MyprofileEditBloc>().add(
+                            InsertAbilitiesForUserPressed(abilitiesForUser: state.abilitiesByUser)
+                          );
+                          context.read<MyprofileEditBloc>().add(
+                            AssignOcupationToUserPressed(userOcupation: UserOcupation(
+                              userId: currentUser?.id ?? '',
+                              ocupationId: state.ocupationAdded.id.isEmpty
+                                ? state.ocupationSelected.id
+                                : state.ocupationAdded.id,
+                              
+                            ))
+                          );
+                          // context.pop();
+                        }
             return SingleChildScrollView(
               child: Container(
                 margin: const EdgeInsets.all(AppDefaults.padding),
@@ -98,11 +155,7 @@ class ProfileEditPage extends StatelessWidget {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
-                      onChanged: (String nombre) {
-                        context
-                            .read<MyprofileEditBloc>()
-                            .add(NamesOnChanged(names: nombre));
-                      },
+                      onChanged: onChangedNames,
                       controller: _namesController,
                     ),
                     const SizedBox(height: AppDefaults.padding),
@@ -113,11 +166,7 @@ class ProfileEditPage extends StatelessWidget {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
-                      onChanged: (apellidos) {
-                        context
-                            .read<MyprofileEditBloc>()
-                            .add(LastNamesOnChanged(lastNames: apellidos));
-                      },
+                      onChanged: onChangedLastNames,
                       controller: _lastNamesController,
                     ),
                     const SizedBox(height: AppDefaults.padding),
@@ -128,11 +177,7 @@ class ProfileEditPage extends StatelessWidget {
                     TextFormField(
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.next,
-                      onChanged: (telefono) {
-                        context
-                            .read<MyprofileEditBloc>()
-                            .add(PhoneOnChanged(phone: telefono));
-                      },
+                      onChanged: onChangedPhone,
                       controller: _phoneController,
                     ),
                     const SizedBox(height: AppDefaults.padding),
@@ -144,10 +189,7 @@ class ProfileEditPage extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
                       maxLines: 2,
-                      onChanged: (description) {
-                        context.read<MyprofileEditBloc>().add(
-                            DescriptionOnChanged(description: description));
-                      },
+                      onChanged: onChangedDescription,
                       controller: _descriptionController,
                     ),
                     const SizedBox(height: AppDefaults.padding),
@@ -160,15 +202,7 @@ class ProfileEditPage extends StatelessWidget {
                       readOnly: true,
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
-                      onTap: () async {
-                        final Ocupation? result = await UiUtil.openBottomSheet(
-                            context: context,
-                            constraints: BoxConstraints(
-                                maxHeight:
-                                    MediaQuery.of(context).size.height * 0.8),
-                            widget: _SearchOcupation());
-                        _ocupationController.text = result?.description ?? '';
-                      },
+                      onTap: onTapSearchOcupation,
                     ),
                     const SizedBox(height: AppDefaults.padding),
 
@@ -184,6 +218,11 @@ class ProfileEditPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 ...myAbilities.map((e) {
+                                  onPressedDeleteUserAbility() {
+                                            context.read<MyprofileEditBloc>().add(
+                                              DeleteUserAbilityById(id: e.ability.id)
+                                            );
+                                          }
                                   return Column(
                                     children: [
                                       ListTile(
@@ -194,11 +233,7 @@ class ProfileEditPage extends StatelessWidget {
                                             .inputDecorationTheme
                                             .hintStyle,
                                         leading: IconButton(
-                                          onPressed: () {
-                                            context.read<MyprofileEditBloc>().add(
-                                              DeleteUserAbilityById(id: e.ability.id)
-                                            );
-                                          },
+                                          onPressed: onPressedDeleteUserAbility,
                                           icon: Icon(
                                             Icons.close_outlined,
                                             size:
@@ -221,9 +256,7 @@ class ProfileEditPage extends StatelessWidget {
                     SizedBox(height: AppDefaults.margin),
                     state.abilitiesByUser.length > 5 && !(state.showAll) 
                         ? TextButton.icon(
-                            onPressed: () {
-                              context.read<MyprofileEditBloc>().add(ShowAllAbilitiesOnPress(showAll: true));
-                            },
+                            onPressed: onPressedShowAllAbilities,
                             label: Text(
                                 'Mostrar ${state.abilitiesByUser.length - myAbilities.length} mas'),
                             icon: Icon(Icons.keyboard_arrow_down_outlined),
@@ -238,14 +271,7 @@ class ProfileEditPage extends StatelessWidget {
                                 padding: WidgetStatePropertyAll(
                                     EdgeInsets.symmetric(
                                         horizontal: AppDefaults.padding))),
-                        onPressed: () async {
-                          await UiUtil.openBottomSheet(
-                              context: context,
-                              constraints: BoxConstraints(
-                                  maxHeight:
-                                      MediaQuery.of(context).size.height * 0.8),
-                              widget: _AddAbilities(userId: currentUser!.id));
-                        },
+                        onPressed: onPressedAddAbilitiesBottomSheet,
                         child: Text('Agregar habilidad')),
                     // TextFormField(
                     //   keyboardType: TextInputType.visiblePassword,
@@ -259,25 +285,8 @@ class ProfileEditPage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
+                        onPressed: onPressedSaveMyProfileChanges,
                         child: const Text('Save'),
-                        onPressed: () {
-                          context.read<MyprofileEditBloc>().add(
-                            UpdateUserSaved(user: state.user)
-                          );
-                          context.read<MyprofileEditBloc>().add(
-                            InsertAbilitiesForUserPressed(abilitiesForUser: state.abilitiesByUser)
-                          );
-                          context.read<MyprofileEditBloc>().add(
-                            AssignOcupationToUserPressed(userOcupation: UserOcupation(
-                              userId: currentUser?.id ?? '',
-                              ocupationId: state.ocupationAdded.id.isEmpty
-                                ? state.ocupationSelected.id
-                                : state.ocupationAdded.id,
-                              
-                            ))
-                          );
-                          // context.pop();
-                        },
                       ),
                     ),
                   ],
@@ -310,6 +319,13 @@ class _AddAbilities extends StatelessWidget {
       },
       child: BlocBuilder<MyprofileEditBloc, MyprofileEditState>(
         builder: (context, state) {
+          onChangedSearchAbility(value) {
+            context
+                .read<MyprofileEditBloc>()
+                .add(SearchAbility(abilityToSearch: value));
+            context.read<MyprofileEditBloc>().add(
+                SearchAbilityOnChange(abilityOnChanging: value));
+          }
           return SingleChildScrollView(
               child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -347,17 +363,7 @@ class _AddAbilities extends StatelessWidget {
                         controller: _controller,
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
-                        onChanged: (value) {
-                          // if((debounce?.isActive ?? false)) debounce?.cancel();
-
-                          context
-                              .read<MyprofileEditBloc>()
-                              .add(SearchAbility(abilityToSearch: value));
-                          context.read<MyprofileEditBloc>().add(
-                              SearchAbilityOnChange(abilityOnChanging: value));
-                          // debounce = Timer(Duration(milliseconds: 900), (){
-                          // });
-                        },
+                        onChanged: onChangedSearchAbility,
                         enableSuggestions: false,
                       ),
                       SizedBox(height: AppDefaults.margin),
@@ -421,6 +427,33 @@ class _CardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    onChangedSelectAbility(value) {
+      final abilitiesSelected = abilities.map((abilityToSelect) {
+        if (ability.id == abilityToSelect.id) {
+          return ability.copyWith(isSelected: value);
+        }
+        return abilityToSelect;
+      }).toList();
+
+      if (isAditionalAbility) {
+        if (!abilitiesSelected.any((a) => a.id == ability.id)) {
+          // abilitiesSelected
+          //     .add(ability.copyWith(isSelected: value));
+          context.read<MyprofileEditBloc>().add(
+              AddAditionalAbility(
+                  abilityDescription: ability.description,
+                  id: ability.id,
+                  userId: userId));
+        }
+      }
+
+      context.read<MyprofileEditBloc>().add(
+        SelectAbilities(
+          abilitiesSelected: abilitiesSelected.where((e) => e.isSelected).toList(),
+          userId: userId
+        )
+      );
+    }
     return Card(
       child: Container(
         padding: EdgeInsets.all(AppDefaults.padding),
@@ -438,33 +471,7 @@ class _CardItem extends StatelessWidget {
                 ),
                 Checkbox(
                   value: ability.isSelected,
-                  onChanged: (value) {
-                    final abilitiesSelected = abilities.map((abilityToSelect) {
-                      if (ability.id == abilityToSelect.id) {
-                        return ability.copyWith(isSelected: value);
-                      }
-                      return abilityToSelect;
-                    }).toList();
-
-                    if (isAditionalAbility) {
-                      if (!abilitiesSelected.any((a) => a.id == ability.id)) {
-                        // abilitiesSelected
-                        //     .add(ability.copyWith(isSelected: value));
-                        context.read<MyprofileEditBloc>().add(
-                            AddAditionalAbility(
-                                abilityDescription: ability.description,
-                                id: ability.id,
-                                userId: userId));
-                      }
-                    }
-
-                    context.read<MyprofileEditBloc>().add(
-                      SelectAbilities(
-                        abilitiesSelected: abilitiesSelected.where((e) => e.isSelected).toList(),
-                        userId: userId
-                      )
-                    );
-                  },
+                  onChanged: onChangedSelectAbility,
                 )
               ],
             )
@@ -531,6 +538,16 @@ class _SearchOcupation extends StatelessWidget {
                     return state.ocupationsFiltered;
                   },
                   builder: (context, state) {
+                    onPressedAddNewOcupation() {
+                      context.read<MyprofileEditBloc>().add(
+                          AddNewOcupation(
+                              ocupation: _controller.text));
+                    }
+                    onChangedSearchOcupation(value) {
+                      context
+                          .read<MyprofileEditBloc>()
+                          .add(SearchOcupation(ocupation: value));
+                    }
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -539,21 +556,13 @@ class _SearchOcupation extends StatelessWidget {
                           decoration: InputDecoration(
                               suffixIcon: state.isEmpty
                                   ? IconButton(
-                                      onPressed: () {
-                                        context.read<MyprofileEditBloc>().add(
-                                            AddNewOcupation(
-                                                ocupation: _controller.text));
-                                      },
+                                      onPressed: onPressedAddNewOcupation,
                                       icon: Icon(Icons.add_circle_outline,
                                           color: AppColors.primary))
                                   : null),
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.next,
-                          onChanged: (value) {
-                            context
-                                .read<MyprofileEditBloc>()
-                                .add(SearchOcupation(ocupation: value));
-                          },
+                          onChanged: onChangedSearchOcupation,
                           enableSuggestions: true,
                         ),
                         SizedBox(height: AppDefaults.margin),
@@ -572,6 +581,14 @@ class _SearchOcupation extends StatelessWidget {
                                           return state.ocupationSelected;
                                         },
                                         builder: (context, state) {
+                                          onTapSaveOcupatonSelected() {
+                                            context
+                                                .read<MyprofileEditBloc>()
+                                                .add(OcupationOnSelected(
+                                                    ocupationSelected:
+                                                        ocupation));
+                                            context.pop(ocupation);
+                                          }
                                           return Card(
                                             color: state.id.isNotEmpty &&
                                                     state.id == ocupation.id
@@ -579,14 +596,7 @@ class _SearchOcupation extends StatelessWidget {
                                                     .indicatorColor
                                                 : Theme.of(context).cardColor,
                                             child: InkWell(
-                                              onTap: () {
-                                                context
-                                                    .read<MyprofileEditBloc>()
-                                                    .add(OcupationOnSelected(
-                                                        ocupationSelected:
-                                                            ocupation));
-                                                context.pop(ocupation);
-                                              },
+                                              onTap: onTapSaveOcupatonSelected,
                                               child: Container(
                                                 padding: EdgeInsets.all(
                                                     AppDefaults.padding),
