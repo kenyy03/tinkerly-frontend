@@ -8,4 +8,8 @@ class AppUtil {
       FocusManager.instance.primaryFocus!.unfocus();
     }
   }
+
+  static String generateSimpleId() {
+    return '${DateTime.now().millisecondsSinceEpoch}-${(1000 + (9999 - 1000) * (DateTime.now().millisecondsSinceEpoch % 1)).toInt()}';
+  }
 }
