@@ -8,5 +8,19 @@ class OcupationRepository extends IOcupationRepository {
   Future<List<Ocupation>> getOcupations() {
     return _dataSource.getOcupations();
   }
-
+  
+  @override
+  Future<List<Ocupation>> createOcupations({required List<Ocupation> newOcupations}) {
+    return _dataSource.createOcupations(newOcupations: newOcupations);
+  }
+  
+  @override
+  Future<bool> assignOcupationToUser({required UserOcupation userOcupation }) {
+    return _dataSource.assignOcupationToUser(userOcupation: userOcupation);
+  }
+  
+  @override
+  Future<Ocupation> getOcupationByUserId({required String userId}) {
+    return _dataSource.getOcupationByUserId(userId: userId);
+  }
 }
