@@ -57,13 +57,13 @@ class DirectionsView extends StatelessWidget {
           if(state is AddressUpdated){
             context.read<AddressBloc>().add(GetAddressByUserId(userId: currentUserId));
           }
+          if(state is AddressObtained){
+              _directionsController.text = state.address.directions;
+              _neighborhoodController.text = state.address.neighborhood;
+          }
         },
         child: BlocBuilder<AddressBloc, AddressState>(
           builder: (context, state) {
-            Future.delayed(Duration(microseconds: 200), (){
-              _directionsController.text = state.address.directions;
-              _neighborhoodController.text = state.address.neighborhood;
-            });
             return SafeArea(
               child: SingleChildScrollView(
                   child: Column(
@@ -108,7 +108,9 @@ class DirectionsView extends StatelessWidget {
                             );
                           },
                           builder: (context, controller, focusNode) {
-                            controller.text = state.address.city.description;
+                            Future.delayed(Duration(milliseconds: 150), (){
+                              controller.text = state.address.city.description;
+                            });
                             return TextFormField(
                               enabled: state is! AddressLoading,
                               validator: Validators.requiredWithFieldName('City').call,
