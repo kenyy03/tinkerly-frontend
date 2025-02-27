@@ -21,4 +21,9 @@ class AuthRepository extends IAuthRepository {
   Future<User> uploadImageProfile({required File file, required String id}) {
     return _datasource.uploadImageProfile(file: file, id: id);
   }
+  
+  @override
+  Future<User> updateUser({required User user}) {
+    return _datasource.updateUser(user: user);
+  }
 }

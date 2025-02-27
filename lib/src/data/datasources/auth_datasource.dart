@@ -96,4 +96,29 @@ class AuthDataSource extends IAuthDataSource {
       return Future.error(e);
     }
   }
+
+  @override
+  Future<User> updateUser({required User user}) async {
+    try {
+      Uri uri = Uri.parse('${environment.baseUrl}/update-user');
+      String body = json.encode(user.toJson());
+      final response = await http.put(
+        uri, 
+        headers: { 'Content-Type': 'application/json', }, 
+        body: body
+      );
+
+      if(response.statusCode != 200){
+        return Future.error(json.decode(response.body)['message']);
+      }
+
+      final jsonResponse = json.decode(response.body) as Map<String,dynamic>;
+      final userResponse = User.fromMap(jsonResponse['data']);
+      final stored = UserStorage();
+      await stored.save('user', userResponse);
+      return userResponse;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }
