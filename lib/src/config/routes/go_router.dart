@@ -69,7 +69,9 @@ final router = GoRouter(
               ),
               BlocProvider(
                 create: (context) => MyprofileEditBloc(
-                  ocupationRepository: OcupationRepository(dataSource: OcupationDataSource())
+                  ocupationRepository: OcupationRepository(dataSource: OcupationDataSource()),
+                  abilityRepository: AbilityRepository(dataSource: AbilityDataSource()),
+                  userRepository: AuthRepository(datasource: AuthDataSource()),
                 )
               )
             ],
@@ -93,7 +95,11 @@ final router = GoRouter(
                     name: ProfileEditScreen.routeName,
                     path: AppRoutes.profileEdit,
                     builder: (context, state) {
+                      final String userId = state.pathParameters['userId'] ?? 'no-id';
                       context.read<MyprofileEditBloc>().add(LoadOcupations());
+                      context.read<MyprofileEditBloc>().add(LoadAbilitiesByUser(userId: userId));
+                      context.read<MyprofileEditBloc>().add(LoadOcupationByUser(userId: userId));
+                      context.read<MyprofileEditBloc>().add(LoadAbilities());
                       return ProfileEditScreen();
                     },
                   ),
@@ -103,9 +109,9 @@ final router = GoRouter(
                     builder: (context, state) {
                       final String userId =
                           state.pathParameters['userId'] ?? 'no-id';
-                          context.read<AddressBloc>().add(LoadCities());
-                          context.read<AddressBloc>().add(GetAddressByUserId(userId: userId));
-                          return DirectionsScreen(currentUserId: userId);
+                      context.read<AddressBloc>().add(LoadCities());
+                      context.read<AddressBloc>().add(GetAddressByUserId(userId: userId));
+                      return DirectionsScreen(currentUserId: userId);
                     },
                   ),
                 ])
