@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:mobile_frontend/src/config/environment/environment.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
-import 'package:mobile_frontend/src/features/common/services/stores/role_store.dart';
-import 'package:mobile_frontend/src/features/common/services/stores/user_store.dart';
+import 'package:mobile_frontend/src/features/common/services/services.dart';
 
 class AuthDataSource extends IAuthDataSource {
   @override
@@ -117,6 +116,30 @@ class AuthDataSource extends IAuthDataSource {
       final stored = UserStorage();
       await stored.save('user', userResponse);
       return userResponse;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  @override
+  Future<List<User>> getUserForHomeResume() async {
+    try {
+      Uri uri = Uri.parse('${environment.baseUrl}/get-public-users-for-resume');
+      final response = await http.get(
+        uri, 
+        headers: { 'Content-Type': 'application/json', }, 
+      );
+
+      if(response.statusCode != 200){
+        return Future.error(json.decode(response.body)['message']);
+      }
+
+      final jsonResponse = json.decode(response.body) as Map<String,dynamic>;
+      final usersResponse = List.from(jsonResponse['data']);
+      final usersHome = usersResponse.map((e) => User.fromMap(e)).toList();
+      final stored = UsersStorage();
+      await stored.save('usersHome', usersHome);
+      return usersHome;
     } catch (e) {
       return Future.error(e);
     }

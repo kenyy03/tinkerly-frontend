@@ -26,4 +26,9 @@ class AuthRepository extends IAuthRepository {
   Future<User> updateUser({required User user}) {
     return _datasource.updateUser(user: user);
   }
+  
+  @override
+  Future<List<User>> getUserForHomeResume() {
+    return _datasource.getUserForHomeResume();
+  }
 }
