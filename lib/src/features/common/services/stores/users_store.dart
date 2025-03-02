@@ -1,24 +1,23 @@
 
-import '../../../../domain/models/user.dart';
+import 'package:mobile_frontend/src/domain/domain.dart';
 import 'dart:convert';
 import 'package:mobile_frontend/src/config/storage/shared_prefs.dart';
-import 'package:mobile_frontend/src/domain/abstractions/istorage_service.dart';
 
-class UsersStorage implements IStorageService<List<User>> {
+class UsersStorage implements IStorageService<List<UserForResumeDto>> {
   @override
-  Future<void> save(String key, List<User> users) async {
+  Future<void> save(String key, List<UserForResumeDto> users) async {
     final prefs = SharedPrefs.instance;
     String encodedData = jsonEncode(users.map((e) => e.toJson()).toList());
     await prefs.setString(key, encodedData);
   }
 
   @override
-  List<User>? get(String key)  {
+  List<UserForResumeDto>? get(String key)  {
     final prefs = SharedPrefs.instance;
     String? data = prefs.getString(key);
     if (data != null) {
       final users = List.from(jsonDecode(data));
-      return users.map((e) => User.fromMap(e)).toList();
+      return users.map((e) => UserForResumeDto.fromMap(e)).toList();
     }
     return null;
   }
