@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/data/infrastructure.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/entrypoint/entry_point_ui.dart';
+import 'package:mobile_frontend/src/features/home/cubit/home_cubit.dart';
 import 'package:mobile_frontend/src/features/home/home_screen.dart';
 import 'package:mobile_frontend/src/features/joinas/cubit/role_radio_button_cubit.dart';
 import 'package:mobile_frontend/src/features/joinas/join_as_screen.dart';
@@ -73,6 +74,11 @@ final router = GoRouter(
                   abilityRepository: AbilityRepository(dataSource: AbilityDataSource()),
                   userRepository: AuthRepository(datasource: AuthDataSource()),
                 )
+              ),
+              BlocProvider(
+                create: (context) => HomeCubit(
+                  authRepository: AuthRepository(datasource: AuthDataSource()) 
+                )
               )
             ],
             child: EntryPointUi(navigationShell: navigationShell),
@@ -81,9 +87,13 @@ final router = GoRouter(
         branches: [
           StatefulShellBranch(routes: [
             GoRoute(
-                name: HomenScreen.routeName,
-                path: AppRoutes.home,
-                builder: (context, state) => HomenScreen())
+              name: HomenScreen.routeName,
+              path: AppRoutes.home,
+              builder: (context, state){
+                context.read<HomeCubit>().getUsersHome(); 
+                return HomenScreen();
+              }
+            )
           ]),
           StatefulShellBranch(routes: [
             GoRoute(
