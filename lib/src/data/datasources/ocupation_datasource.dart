@@ -65,7 +65,7 @@ class OcupationDataSource extends IOcupationDataSource {
   }
 
   @override
-  Future<Ocupation> getOcupationByUserId({ required String userId }) async {
+  Future<UserOcupation> getOcupationByUserId({ required String userId }) async {
     try {
       Uri uri = Uri.parse('${environment.baseUrl}/ocupation/get-ocupation-by-user')
         .replace(queryParameters: { 'userId': userId });
@@ -75,7 +75,7 @@ class OcupationDataSource extends IOcupationDataSource {
       }
 
       final jsonResponse = json.decode(response.body) as Map<String,dynamic>;
-      final ocupations = Ocupation.fromMap(jsonResponse['data']['ocupationId']);
+      final ocupations = UserOcupation.fromMap(jsonResponse['data']);
       return ocupations;
     } catch (e) {
       return Future.error(e);

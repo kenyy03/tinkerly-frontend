@@ -4,5 +4,5 @@ abstract class IOcupationRepository {
   Future<List<Ocupation>> getOcupations();
   Future<List<Ocupation>> createOcupations({ required List<Ocupation> newOcupations });
   Future<bool> assignOcupationToUser({ required UserOcupation userOcupation });
-  Future<Ocupation> getOcupationByUserId({ required String userId });
+  Future<UserOcupation> getOcupationByUserId({ required String userId });
 }
