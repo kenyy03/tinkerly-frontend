@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_frontend/src/domain/routes/app_routes.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 // import '../models/dummy_bundle_model.dart';
@@ -8,10 +9,10 @@ import 'network_image.dart';
 class BundleTileSquare extends StatelessWidget {
   const BundleTileSquare({
     super.key,
-    // required this.data,
+    required this.data,
   });
 
-  // final BundleModel data;
+  final User data;
 
   @override
   Widget build(BuildContext context) {
@@ -20,77 +21,93 @@ class BundleTileSquare extends StatelessWidget {
       borderRadius: AppDefaults.borderRadius,
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, AppRoutes.bundleProduct);
+          context.push(AppRoutes.bundleProduct);
         },
         borderRadius: AppDefaults.borderRadius,
         child: Container(
           width: 176,
-          padding: const EdgeInsets.symmetric(horizontal: AppDefaults.padding),
+          padding: const EdgeInsets.symmetric(horizontal: AppDefaults.padding -5),
           decoration: BoxDecoration(
-            border: Border.all(width: 0.1, color: AppColors.placeholder),
+            // border: Border.all(width: 0.2, color: AppColors.placeholder),
             borderRadius: AppDefaults.borderRadius,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: AspectRatio(
-                  aspectRatio: 1 / 1,
-                  child: NetworkImageWithLoader(
-                    // data.cover,
-                    '',
-                    fit: BoxFit.contain,
+          child: Card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: NetworkImageWithLoader(
+                            data.imageProfile.url,
+                            // '',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    // data.name,
-                    '',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(color: Colors.black),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                const SizedBox(height: 3),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: AppDefaults.margin-5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data.names,
+                        // '',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: Colors.black),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        data.description,
+                        // '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                  Text(
-                    // data.itemNames.join(','),
-                    '',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: AppDefaults.margin-5),
+                  child: Row(
+                    children: [
+                      Text(
+                        '\$${data.role.description}',
+                        // '',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: Colors.black),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        // '\$${data.lastNames}',
+                        '',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                      ),
+                      const Spacer(),
+                    ],
                   ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Text(
-                    // '\$${data.price.toInt()}',
-                    '',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(color: Colors.black),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    // '\$${data.mainPrice}',
-                    '',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          decoration: TextDecoration.lineThrough,
-                        ),
-                  ),
-                  const Spacer(),
-                ],
-              ),
-              const SizedBox(height: 16),
-            ],
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
         ),
       ),
