@@ -1,30 +1,32 @@
+import 'package:mobile_frontend/src/domain/domain.dart';
+
 class UserOcupation {
   final String id;
   final String userId;
-  final String ocupationId;
+  final Ocupation ocupation;
   final double hourlyRate;
   final double serviceFee;
 
   UserOcupation({
     this.id = '',
     this.userId = '', 
-    this.ocupationId = '', 
+    Ocupation? ocupation, 
     this.hourlyRate = 0.0, 
     this.serviceFee = 0.0
-  });
+  }) : ocupation = ocupation ?? Ocupation(description: '');
 
     factory UserOcupation.fromMap(Map<String, dynamic> json) => UserOcupation(
     id: json["_id"],
     userId: json["userId"],
-    ocupationId: json["ocupationId"],
-    hourlyRate: json["hourlyRate"],
-    serviceFee: json["serviceFee"],
+    ocupation: Ocupation.fromMap(json["ocupationId"] ?? {}),
+    hourlyRate: double.tryParse(json["hourlyRate"]['\$numberDecimal']) ?? 0.0 ,
+    serviceFee: double.tryParse(json["serviceFee"]['\$numberDecimal']) ?? 0.0 ,
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
     "userId": userId,
-    "ocupationId": ocupationId,
+    "ocupationId": ocupation.id,
     "hourlyRate": hourlyRate,
     "serviceFee": serviceFee,
   };
@@ -32,17 +34,16 @@ class UserOcupation {
   UserOcupation copyWith({
     String? id, 
     String? userId, 
-    String? ocupationId, 
+    Ocupation? ocupation, 
     double? hourlyRate, 
     double? serviceFee
   }){
     return UserOcupation(
       id: id ?? this.id, 
       userId: userId ?? this.userId,
-      ocupationId: ocupationId ?? this.ocupationId,
+      ocupation: ocupation ?? this.ocupation,
       hourlyRate: hourlyRate ?? this.hourlyRate,
       serviceFee: serviceFee ?? this.serviceFee,
     );
   }
-
 }

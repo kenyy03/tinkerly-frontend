@@ -34,7 +34,7 @@ class User {
     phone: json['phone'],
     description: json["description"],
     role: Role.fromMap(json['roleId']),
-    imageProfile: ImageProfile.fromMap(json['imageProfile'] ?? ImageProfile()),
+    imageProfile: ImageProfile.fromMap(json['imageProfile'] ?? ImageProfile().toJson()),
   );
 
   Map<String, dynamic> toJson() => {
@@ -69,7 +69,7 @@ class User {
       phone: phone ?? this.phone, 
       description: description ?? this.description,
       role: role ?? this.role,
-      imageProfile: imageProfile ?? imageProfile
+      imageProfile: imageProfile ?? this.imageProfile
     );
   }
   

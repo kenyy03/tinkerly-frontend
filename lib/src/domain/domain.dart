@@ -7,6 +7,8 @@ export './models/role.dart';
 export './models/user_ability.dart';
 export './models/user_ocupation.dart';
 export './models/user.dart';
+export './models/user_for_resume_dto.dart';
+export './models/image_state_dto.dart';
 export './routes/app_routes.dart';
 export 'abstractions/datasources/iability_datasource.dart';
 export 'abstractions/datasources/iaddress_datasource.dart';
