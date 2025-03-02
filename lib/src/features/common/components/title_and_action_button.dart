@@ -18,7 +18,8 @@ class TitleAndActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: AppDefaults.margin),
       padding: const EdgeInsets.symmetric(horizontal: AppDefaults.padding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,10 +36,10 @@ class TitleAndActionButton extends StatelessWidget {
                     .bodyLarge
                     ?.copyWith(color: Colors.black),
           ),
-          TextButton(
-            onPressed: onTap,
-            child: Text(actionLabel ?? 'View All'),
-          ),
+          // TextButton(
+          //   onPressed: onTap,
+          //   child: Text(actionLabel ?? 'View All'),
+          // ),
         ],
       ),
     );
