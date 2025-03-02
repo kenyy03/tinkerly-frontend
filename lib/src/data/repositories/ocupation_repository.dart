@@ -20,7 +20,7 @@ class OcupationRepository extends IOcupationRepository {
   }
   
   @override
-  Future<Ocupation> getOcupationByUserId({required String userId}) {
+  Future<UserOcupation> getOcupationByUserId({required String userId}) {
     return _dataSource.getOcupationByUserId(userId: userId);
   }
 }

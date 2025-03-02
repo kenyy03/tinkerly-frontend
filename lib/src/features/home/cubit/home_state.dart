@@ -5,7 +5,7 @@ sealed class HomeState extends Equatable {
     this.usersHome = const []
   });
 
-  final List<User> usersHome;
+  final List<UserForResumeDto> usersHome;
   @override
   List<Object> get props => [usersHome];
 }
@@ -22,7 +22,7 @@ final class HomeFailure extends HomeState {
   const HomeFailure({required this.messageError}) : super();
 }
 final class UsersHomeObtained extends HomeState {
-  final List<User> usersHomeObtained;
+  final List<UserForResumeDto> usersHomeObtained;
 
   const UsersHomeObtained({required this.usersHomeObtained}) 
     : super(usersHome: usersHomeObtained);
