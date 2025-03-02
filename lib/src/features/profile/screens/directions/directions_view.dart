@@ -152,6 +152,7 @@ class DirectionsView extends StatelessWidget {
                         TextFormField(
                           enabled: state is! AddressLoading ,
                           maxLines: 2,
+                          enableSuggestions: false,
                           textInputAction: TextInputAction.done,
                           validator:
                               Validators.requiredWithFieldName('Directions')

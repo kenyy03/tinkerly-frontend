@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
-import 'package:mobile_frontend/src/features/common/services/stores/role_store.dart';
-import 'package:mobile_frontend/src/features/common/services/stores/user_store.dart';
+import 'package:mobile_frontend/src/features/common/services/services.dart';
 import 'package:mobile_frontend/src/features/profile/components/profile_list_tile.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 

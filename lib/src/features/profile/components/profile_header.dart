@@ -103,27 +103,33 @@ class _UserDataState extends State<_UserData> {
                     child: NetworkImageWithLoader(currentUser!
                             .imageProfile.url.isEmpty
                         ? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                        : currentUser!.imageProfile.url)),
+                        : Uri.parse(currentUser!.imageProfile.url).toString())),
               ),
             ),
             const SizedBox(width: AppDefaults.padding),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${currentUser?.names} ${currentUser?.lastNames}',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Tipo: ${currentUser?.role.description}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(color: Colors.white),
-                ),
-              ],
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${currentUser?.names} ${currentUser?.lastNames}',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                    maxLines: 2,
+                    softWrap: true,
+                    // overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Tipo: ${currentUser?.role.description}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Colors.white),
+                  ),
+                ],
+              ),
             )
           ],
         ),

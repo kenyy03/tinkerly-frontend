@@ -16,6 +16,8 @@ class ProfileEditPage extends StatelessWidget {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _ocupationController = TextEditingController();
+  final TextEditingController _hourlyRateController = TextEditingController();
+  final TextEditingController _serviceFeeController = TextEditingController();
   final UserStorage _userStorage = UserStorage();
 
   @override
@@ -205,7 +207,47 @@ class ProfileEditPage extends StatelessWidget {
                       onTap: onTapSearchOcupation,
                     ),
                     const SizedBox(height: AppDefaults.padding),
-
+                    /* <---- values -----> */
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: Column(
+                            children: [
+                              const Text("Pago minimo por hora"),
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                controller: _hourlyRateController,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                onChanged: (value) {
+                                  
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: Column(
+                            children: [
+                              const Text("Pago minimo por servicio"),
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                controller: _serviceFeeController,
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.next,
+                                onChanged: (value) {
+                                  
+                                },
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: AppDefaults.padding),
                     /* <---- Password -----> */
 
                     /* <---- Abilities -----> */
@@ -282,13 +324,24 @@ class ProfileEditPage extends StatelessWidget {
 
                     /* <---- Submit -----> */
                     const SizedBox(height: AppDefaults.padding),
-                    SizedBox(
+                    state is! MyprofileEditLoading ? SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: onPressedSaveMyProfileChanges,
                         child: const Text('Save'),
                       ),
-                    ),
+                    ) : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(state.message),
+                                CircularProgressIndicator()
+                              ],
+                            ),
+                          ],
+                        ),
                   ],
                 ),
               ),
