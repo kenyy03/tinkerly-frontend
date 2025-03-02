@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
-
-// import '../models/dummy_bundle_model.dart';
 import 'network_image.dart';
 
 class BundleTileSquare extends StatelessWidget {
@@ -12,7 +10,7 @@ class BundleTileSquare extends StatelessWidget {
     required this.data,
   });
 
-  final User data;
+  final UserForResumeDto data;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,6 @@ class BundleTileSquare extends StatelessWidget {
           width: 176,
           padding: const EdgeInsets.symmetric(horizontal: AppDefaults.padding -5),
           decoration: BoxDecoration(
-            // border: Border.all(width: 0.2, color: AppColors.placeholder),
             borderRadius: AppDefaults.borderRadius,
           ),
           child: Card(
@@ -47,7 +44,6 @@ class BundleTileSquare extends StatelessWidget {
                           aspectRatio: 1 / 1,
                           child: NetworkImageWithLoader(
                             data.imageProfile.url,
-                            // '',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -62,8 +58,7 @@ class BundleTileSquare extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data.names,
-                        // '',
+                        '${data.names} ${data.lastNames}',
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -72,8 +67,7 @@ class BundleTileSquare extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        data.description,
-                        // '',
+                        data.userOcupation.ocupation.description,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -86,8 +80,7 @@ class BundleTileSquare extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        '\$${data.role.description}',
-                        // '',
+                        '\$${data.userOcupation.serviceFee}',
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -95,7 +88,6 @@ class BundleTileSquare extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        // '\$${data.lastNames}',
                         '',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               decoration: TextDecoration.lineThrough,

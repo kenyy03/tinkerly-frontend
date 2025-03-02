@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/services/camera_service.dart';
 import 'package:mobile_frontend/src/features/profile/components/profile_square_tile.dart';
 import 'package:mobile_frontend/src/features/profile/cubit/image_picker_profile_cubit.dart';
@@ -36,14 +37,18 @@ class ProfileHeaderOptions extends StatelessWidget {
             label: 'Foto',
             icon: AppIcons.cameraOutlined,
             onTap: () async {
-              final result = await UiUtil.openBottomSheet(
+              final ImageDto result = await UiUtil.openBottomSheet(
                 context: context,
                 constraints: BoxConstraints(
                   maxHeight: MediaQuery.of(context).size.height * 0.35),
                 widget: _ManagmentProfilePhoto()
               );
               if(context.mounted){
-                context.read<ImagePickerProfileCubit>().onSelectedPhotoFromGallery(imagePath: result ?? '');
+                if(result.esEliminarFoto){
+                  print('Eliminar foto');
+                }else{
+                  context.read<ImagePickerProfileCubit>().onSelectedPhotoFromGallery(imagePath: result.path);
+                }
               }
             },
           ),
@@ -70,7 +75,7 @@ class _ManagmentProfilePhoto extends StatelessWidget {
     void openCameraToTakePhoto() async {
       String? imagePath = await _imagePicker.takePhoto();
       if (context.mounted) {
-        context.pop(imagePath);
+        context.pop(ImageDto(path: imagePath ?? '', esEliminarFoto: false));
       }
     }
 
@@ -78,7 +83,7 @@ class _ManagmentProfilePhoto extends StatelessWidget {
       String? imagePath;
       imagePath = await _imagePicker.selectPhoto();
       if (context.mounted) {
-        context.pop(imagePath);
+        context.pop(ImageDto(path: imagePath ?? '', esEliminarFoto: false));
       }
     }
 
@@ -129,6 +134,7 @@ class _ManagmentProfilePhoto extends StatelessWidget {
                 title: const Text('Eliminar Foto',
                     style: TextStyle(color: Colors.red)),
                 trailing: const Icon(Icons.delete_outlined, color: Colors.red),
+                onTap: () => context.pop(ImageDto(path: '', esEliminarFoto: true)),
               ),
             ],
           ),

@@ -131,3 +131,15 @@ final class UpdateUserSaved extends MyprofileEditEvent {
 
   const UpdateUserSaved({required this.user});
 }
+
+final class HourlyRateOnChanged extends MyprofileEditEvent {
+  final double hourlyRate;
+
+  const HourlyRateOnChanged({required this.hourlyRate});
+}
+
+final class ServiceFeeOnChanged extends MyprofileEditEvent {
+  final double serviceFee;
+
+  const ServiceFeeOnChanged({required this.serviceFee});
+}

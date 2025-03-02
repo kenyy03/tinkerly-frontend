@@ -41,75 +41,82 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
       on<InsertAbilitiesForUserPressed>(_onInsertAbilitiesForUser);
       on<UpdateUserSaved>(_onUpdateUser);
       on<LoadOcupationByUser>(_onLoadOcupationByUserId);
+      on<HourlyRateOnChanged>(_onChangeHourlyRate);
+      on<ServiceFeeOnChanged>(_onChangeServiceFee);
   }
 
   void _userLogginFilled(LoadUserLoggin event, Emitter<MyprofileEditState> emit){
     emit(UserFilled(
-      user: event.userLogged.copyWith(), 
-      ocupationSelected: state.ocupationSelected,
-      ocupations: [...state.ocupations],
-      ocupationsFiltered: [...state.ocupations],
-      ocupationAdded: state.ocupationAdded,
       abilities: state.abilities,
-      abilitiesFiltered: state.abilitiesFiltered,
       abilitiesByUser: state.abilitiesByUser,
+      abilitiesFiltered: state.abilitiesFiltered,
+      ocupationAdded: state.ocupationAdded,
+      ocupations: [...state.ocupations],
+      ocupationSelected: state.ocupationSelected,
+      ocupationsFiltered: [...state.ocupations],
       showAll: state.showAll,
+      user: event.userLogged.copyWith(), 
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
   
   void _namesChanged(NamesOnChanged event, Emitter<MyprofileEditState> emit){
     emit(UserFilled(
-      user: state.user.copyWith(names: event.names), 
-      ocupations: [...state.ocupations],
-      ocupationsFiltered: [...state.ocupations],
-      ocupationSelected: state.ocupationSelected,
-      ocupationAdded: state.ocupationAdded,
       abilities: state.abilities,
-      abilitiesFiltered: state.abilitiesFiltered,
       abilitiesByUser: state.abilitiesByUser,
+      abilitiesFiltered: state.abilitiesFiltered,
+      ocupationAdded: state.ocupationAdded,
+      ocupations: [...state.ocupations],
+      ocupationSelected: state.ocupationSelected,
+      ocupationsFiltered: [...state.ocupations],
       showAll: state.showAll,
+      user: state.user.copyWith(names: event.names), 
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
 
   void _lastNamesChanged(LastNamesOnChanged event, Emitter<MyprofileEditState> emit){
     emit(UserFilled(
-      user: state.user.copyWith(lastNames: event.lastNames), 
-      ocupations: [...state.ocupations],
-      ocupationsFiltered: [...state.ocupations],
-      ocupationSelected: state.ocupationSelected,
-      ocupationAdded: state.ocupationAdded,
       abilities: state.abilities,
-      abilitiesFiltered: state.abilitiesFiltered,
       abilitiesByUser: state.abilitiesByUser,
+      abilitiesFiltered: state.abilitiesFiltered,
+      ocupationAdded: state.ocupationAdded,
+      ocupations: [...state.ocupations],
+      ocupationSelected: state.ocupationSelected,
+      ocupationsFiltered: [...state.ocupations],
       showAll: state.showAll,
+      user: state.user.copyWith(lastNames: event.lastNames), 
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
 
   void _phoneChanged(PhoneOnChanged event, Emitter<MyprofileEditState> emit){
     emit(UserFilled(
-      user: state.user.copyWith(phone: event.phone), 
-      ocupations: [...state.ocupations],
-      ocupationsFiltered: [...state.ocupations],
-      ocupationSelected: state.ocupationSelected,
-      ocupationAdded: state.ocupationAdded,
       abilities: state.abilities,
-      abilitiesFiltered: state.abilitiesFiltered,
       abilitiesByUser: state.abilitiesByUser,
+      abilitiesFiltered: state.abilitiesFiltered,
+      ocupationAdded: state.ocupationAdded,
+      ocupations: [...state.ocupations],
+      ocupationSelected: state.ocupationSelected,
+      ocupationsFiltered: [...state.ocupations],
       showAll: state.showAll,
+      user: state.user.copyWith(phone: event.phone), 
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
 
   void _descriptionChanged(DescriptionOnChanged event, Emitter<MyprofileEditState> emit){
     emit(UserFilled(
-      user: state.user.copyWith(description: event.description), 
-      ocupations: [...state.ocupations],
-      ocupationsFiltered: [...state.ocupations],
-      ocupationSelected: state.ocupationSelected,
-      ocupationAdded: state.ocupationAdded,
       abilities: state.abilities,
-      abilitiesFiltered: state.abilitiesFiltered,
       abilitiesByUser: state.abilitiesByUser,
+      abilitiesFiltered: state.abilitiesFiltered,
+      ocupationAdded: state.ocupationAdded,
+      ocupations: [...state.ocupations],
+      ocupationSelected: state.ocupationSelected,
+      ocupationsFiltered: [...state.ocupations],
       showAll: state.showAll,
+      user: state.user.copyWith(description: event.description), 
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
 
@@ -117,15 +124,16 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
     try {
       final response = await _ocupationRepository.getOcupations();
       emit(OcupationsObtained(
-        ocupations: response, 
-        ocupationsFiltered: response,
-        ocupationSelected: state.ocupationSelected,
-        ocupationAdded: state.ocupationAdded,
         abilities: state.abilities,
         abilitiesByUser: state.abilitiesByUser,
         abilitiesFiltered: state.abilitiesFiltered,
-        user: state.user, 
+        ocupationAdded: state.ocupationAdded,
+        ocupations: response, 
+        ocupationSelected: state.ocupationSelected,
+        ocupationsFiltered: response,
         showAll: state.showAll,
+        user: state.user, 
+        userOcupation: state.userOcupation.copyWith(),
       ));
     } catch (e) {
       emit(MyprofileEditFailure(messageError: e.toString()));
@@ -134,15 +142,16 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
 
   void _onSelectedOcupation(OcupationOnSelected event, Emitter<MyprofileEditState> emit){
     emit(OcupationSelected(
-      user: state.user, 
-      ocupationSelected: event.ocupationSelected.copyWith(), 
-      ocupations: [...state.ocupations],
-      ocupationsFiltered: [...state.ocupations],
-      ocupationAdded: state.ocupationAdded,
       abilities: state.abilities,
-      abilitiesFiltered: state.abilitiesFiltered,
       abilitiesByUser: state.abilitiesByUser,
+      abilitiesFiltered: state.abilitiesFiltered,
+      ocupationAdded: state.ocupationAdded,
+      ocupations: [...state.ocupations],
+      ocupationSelected: event.ocupationSelected.copyWith(), 
+      ocupationsFiltered: [...state.ocupations],
       showAll: state.showAll,
+      user: state.user, 
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
 
@@ -158,15 +167,16 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
         .toList();
     }
     emit(OcupationsFiltered(
-      user: state.user,
-      ocupationSelected: state.ocupationSelected,
-      ocupations: [...state.ocupations],
-      ocupationsFiltered: [...ocupationsToShow],
-      ocupationAdded: state.ocupationAdded,
       abilities: state.abilities,
-      abilitiesFiltered: state.abilitiesFiltered,
       abilitiesByUser: state.abilitiesByUser,
+      abilitiesFiltered: state.abilitiesFiltered,
+      ocupationAdded: state.ocupationAdded,
+      ocupations: [...state.ocupations],
+      ocupationSelected: state.ocupationSelected,
+      ocupationsFiltered: [...ocupationsToShow],
       showAll: state.showAll,
+      user: state.user,
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
 
@@ -176,15 +186,16 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
         newOcupations: [Ocupation(description: event.ocupation)]
       );      
       emit(OcupationAdded(
-        user: state.user,
-        ocupationSelected: state.ocupationSelected,
-        ocupations: [...state.ocupations],
-        ocupationsFiltered: [...state.ocupationsFiltered],
-        ocupationAdded: response[0],
         abilities: state.abilities,
         abilitiesByUser: state.abilitiesByUser,
         abilitiesFiltered: state.abilitiesFiltered,
+        ocupationAdded: response[0],
+        ocupations: [...state.ocupations],
+        ocupationSelected: state.ocupationSelected,
+        ocupationsFiltered: [...state.ocupationsFiltered],
         showAll: state.showAll,
+        user: state.user,
+        userOcupation: state.userOcupation.copyWith(),
       ));
     } catch (e) {
       emit(MyprofileEditFailure(messageError: e.toString()));
@@ -195,15 +206,16 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
     try {
       final response = await _abilityRepository.getAbilitiesByUser(userId: event.userId);
       emit(AbilitiesByUserObtained(
-        abilitiesByUser: response,
         abilities: state.abilities,
+        abilitiesByUser: response,
         abilitiesFiltered: state.abilitiesFiltered,
         ocupationAdded: state.ocupationAdded,
-        ocupationSelected: state.ocupationSelected,
         ocupations: state.ocupations,
+        ocupationSelected: state.ocupationSelected,
         ocupationsFiltered: state.ocupationsFiltered,
-        user: state.user,
         showAll: state.showAll,
+        user: state.user,
+        userOcupation: state.userOcupation.copyWith(),
       ));
     } catch (e) {
       emit(MyprofileEditFailure(messageError: e.toString()));
@@ -223,15 +235,16 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
           }).toList();
 
         emit(AbilitiesObtained(
-          abilitiesByUser: state.abilitiesByUser,
           abilities: preSelectAbilities,
+          abilitiesByUser: state.abilitiesByUser,
           abilitiesFiltered: preSelectAbilities,
           ocupationAdded: state.ocupationAdded,
-          ocupationSelected: state.ocupationSelected,
           ocupations: state.ocupations,
+          ocupationSelected: state.ocupationSelected,
           ocupationsFiltered: state.ocupationsFiltered,
-          user: state.user,
           showAll: state.showAll,
+          user: state.user,
+          userOcupation: state.userOcupation.copyWith(),
         ));
       },);
     } catch (e) {
@@ -258,6 +271,7 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
       ocupationsFiltered: state.ocupationsFiltered,
       user: state.user,
       showAll: state.showAll,
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
 
@@ -271,10 +285,6 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
           return ability.description.toLowerCase().contains(event.abilityToSearch.toLowerCase());
         })
         .toList();
-
-      // if(abilitiesToShow.isEmpty){
-      //   abilitiesToShow = [...state.abilities, Ability(description: event.abilityToSearch, isSelected: true, id: AppUtil.generateSimpleId())];
-      // }
     }    
 
     emit(AbilitiesFiltered(
@@ -282,26 +292,28 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
       abilitiesByUser: state.abilitiesByUser,
       abilitiesFiltered: abilitiesToShow,
       ocupationAdded: state.ocupationAdded,
-      ocupationSelected: state.ocupationSelected,
       ocupations: state.ocupations,
+      ocupationSelected: state.ocupationSelected,
       ocupationsFiltered: state.ocupationsFiltered,
-      user: state.user,
       showAll: state.showAll,
+      user: state.user,
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
 
   void _onChangingAbilityToSearch(SearchAbilityOnChange event, Emitter<MyprofileEditState> emit){
     emit(AbilityToSearchChanging(
-      abilitySearchChanging: event.abilityOnChanging,
       abilities: state.abilities,
       abilitiesByUser: state.abilitiesByUser,
       abilitiesFiltered: state.abilitiesFiltered,
+      abilitySearchChanging: event.abilityOnChanging,
       ocupationAdded: state.ocupationAdded,
-      ocupationSelected: state.ocupationSelected,
       ocupations: state.ocupations,
+      ocupationSelected: state.ocupationSelected,
       ocupationsFiltered: state.ocupationsFiltered,
-      user: state.user,
       showAll: state.showAll,
+      user: state.user,
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
   
@@ -326,15 +338,16 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
       ];
 
       emit(AbilitiesObtained(
-        abilitiesByUser: abilitiesByUserUpdated,
         abilities: abilitiesUpdated,
+        abilitiesByUser: abilitiesByUserUpdated,
         abilitiesFiltered: abilitiesUpdated,
         ocupationAdded: state.ocupationAdded,
-        ocupationSelected: state.ocupationSelected,
         ocupations: state.ocupations,
+        ocupationSelected: state.ocupationSelected,
         ocupationsFiltered: state.ocupationsFiltered,
-        user: state.user,
         showAll: state.showAll,
+        user: state.user,
+        userOcupation: state.userOcupation.copyWith(),
       ));
 
     } catch (e) {
@@ -344,15 +357,16 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
 
   void _onPressShowAllAbilities(ShowAllAbilitiesOnPress event, Emitter<MyprofileEditState> emit){
     emit(ShowAllAbilities(
-      showAll: event.showAll,
-      abilitiesByUser: state.abilitiesByUser,
       abilities: state.abilities,
+      abilitiesByUser: state.abilitiesByUser,
       abilitiesFiltered: state.abilitiesFiltered,
       ocupationAdded: state.ocupationAdded,
-      ocupationSelected: state.ocupationSelected,
       ocupations: state.ocupations,
+      ocupationSelected: state.ocupationSelected,
       ocupationsFiltered: state.ocupationsFiltered,
+      showAll: event.showAll,
       user: state.user,
+      userOcupation: state.userOcupation.copyWith(),
     ));
     
   }
@@ -370,35 +384,19 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
       abilities: abilities,
       abilitiesByUser: userAbilities,
       abilitiesFiltered: abilities,
-      ocupations: state.ocupations,
-      ocupationsFiltered: state.ocupationsFiltered,
       ocupationAdded: state.ocupationAdded,
+      ocupations: state.ocupations,
       ocupationSelected: state.ocupationSelected,
-      user: state.user,
+      ocupationsFiltered: state.ocupationsFiltered,
       showAll: state.showAll,
+      user: state.user,
+      userOcupation: state.userOcupation.copyWith(),
     ));
   }
 
   void _onAssignOcupationToUser(AssignOcupationToUserPressed event, Emitter<MyprofileEditState> emit) async {
     try {
-      await _ocupationRepository.assignOcupationToUser(userOcupation: event.userOcupation);
-    } catch (e) {
-      MyprofileEditFailure(messageError: e.toString());
-    }
-  }
-
-  void _onInsertAbilitiesForUser(InsertAbilitiesForUserPressed event, Emitter<MyprofileEditState> emit) async {
-    try {
-      await _abilityRepository.insertAbilitiesForUser(abilitiesForUser: event.abilitiesForUser);
-    } catch (e) {
-      MyprofileEditFailure(messageError: e.toString());
-    }
-  }
-
-  void _onUpdateUser(UpdateUserSaved event, Emitter<MyprofileEditState> emit) async {
-    try {
-      final response = await _userRepository.updateUser(user: event.user);
-      emit(UserUpdated(
+      emit(MyprofileEditLoading(
         abilities: state.abilities,
         abilitiesByUser: state.abilitiesByUser,
         abilitiesFiltered: state.abilitiesFiltered,
@@ -407,7 +405,61 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
         ocupations: state.ocupations,
         ocupationsFiltered: state.ocupationsFiltered,
         showAll: state.showAll,
+        user: state.user,
+        userOcupation: state.userOcupation.copyWith(),
+      ));
+      await _ocupationRepository.assignOcupationToUser(userOcupation: event.userOcupation);
+    } catch (e) {
+      MyprofileEditFailure(messageError: e.toString());
+    }
+  }
+
+  void _onInsertAbilitiesForUser(InsertAbilitiesForUserPressed event, Emitter<MyprofileEditState> emit) async {
+    try {
+      emit(MyprofileEditLoading(
+        abilities: state.abilities,
+        abilitiesByUser: state.abilitiesByUser,
+        abilitiesFiltered: state.abilitiesFiltered,
+        ocupationAdded: state.ocupationAdded,
+        ocupationSelected: state.ocupationSelected,
+        ocupations: state.ocupations,
+        ocupationsFiltered: state.ocupationsFiltered,
+        showAll: state.showAll,
+        user: state.user,
+        userOcupation: state.userOcupation.copyWith(),
+      ));
+      await _abilityRepository.insertAbilitiesForUser(abilitiesForUser: event.abilitiesForUser);
+    } catch (e) {
+      MyprofileEditFailure(messageError: e.toString());
+    }
+  }
+
+  void _onUpdateUser(UpdateUserSaved event, Emitter<MyprofileEditState> emit) async {
+    try {
+      emit(MyprofileEditLoading(
+        abilities: state.abilities,
+        abilitiesByUser: state.abilitiesByUser,
+        abilitiesFiltered: state.abilitiesFiltered,
+        ocupationAdded: state.ocupationAdded,
+        ocupations: state.ocupations,
+        ocupationSelected: state.ocupationSelected,
+        ocupationsFiltered: state.ocupationsFiltered,
+        showAll: state.showAll,
+        user: state.user,
+        userOcupation: state.userOcupation.copyWith(),
+      ));
+      final response = await _userRepository.updateUser(user: event.user);
+      emit(UserUpdated(
+        abilities: state.abilities,
+        abilitiesByUser: state.abilitiesByUser,
+        abilitiesFiltered: state.abilitiesFiltered,
+        ocupationAdded: state.ocupationAdded,
+        ocupations: state.ocupations,
+        ocupationSelected: state.ocupationSelected,
+        ocupationsFiltered: state.ocupationsFiltered,
+        showAll: state.showAll,
         user: response,
+        userOcupation: state.userOcupation.copyWith(),
       ));
     } catch (e) {
       MyprofileEditFailure(messageError: e.toString());
@@ -422,14 +474,45 @@ class MyprofileEditBloc extends Bloc<MyprofileEditEvent, MyprofileEditState> {
         abilitiesByUser: state.abilitiesByUser,
         abilitiesFiltered: state.abilitiesFiltered,
         ocupationAdded: state.ocupationAdded,
-        ocupationSelected: response,
         ocupations: state.ocupations,
+        ocupationSelected: response.ocupation,
         ocupationsFiltered: state.ocupationsFiltered,
         showAll: state.showAll,
         user: state.user,
+        userOcupation: response,
       ));
     } catch (e) {
       MyprofileEditFailure(messageError: e.toString());
     }
+  }
+
+  void _onChangeHourlyRate(HourlyRateOnChanged event, Emitter<MyprofileEditState> emit){
+  emit(UserOcupationFilled(
+      abilities: state.abilities,
+      abilitiesByUser: state.abilitiesByUser,
+      abilitiesFiltered: state.abilitiesFiltered,
+      ocupationAdded: state.ocupationAdded,
+      ocupations: state.ocupations,
+      ocupationSelected: state.ocupationSelected,
+      ocupationsFiltered: state.ocupationsFiltered,
+      showAll: state.showAll,
+      user: state.user,
+      userOcupation: state.userOcupation.copyWith(hourlyRate: event.hourlyRate),
+    ));
+  }
+
+  void _onChangeServiceFee(ServiceFeeOnChanged event, Emitter<MyprofileEditState> emit){
+  emit(UserOcupationFilled(
+      abilities: state.abilities,
+      abilitiesByUser: state.abilitiesByUser,
+      abilitiesFiltered: state.abilitiesFiltered,
+      ocupationAdded: state.ocupationAdded,
+      ocupations: state.ocupations,
+      ocupationSelected: state.ocupationSelected,
+      ocupationsFiltered: state.ocupationsFiltered,
+      showAll: state.showAll,
+      user: state.user,
+      userOcupation: state.userOcupation.copyWith(serviceFee: event.serviceFee),
+    ));
   }
 }

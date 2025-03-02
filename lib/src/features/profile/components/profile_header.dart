@@ -76,7 +76,7 @@ class _UserDataState extends State<_UserData> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ImagePickerProfileCubit, ImagePickerProfileState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if(state is ImageProfileOnSelectedPhoto){
           final currentUser = UserStorage().get('user');
           context.read<ImagePickerProfileCubit>().onUploadImageProfile(file: File(state.imageProfilePath), id: currentUser!.id);
@@ -85,6 +85,7 @@ class _UserDataState extends State<_UserData> {
           currentUser = currentUser!.copyWith(
             imageProfile: currentUser!.imageProfile.copyWith(url: state.imageProfilePath) 
           );
+          await Future.delayed(Duration(milliseconds: 150));
           setState(() {});
         }
       },

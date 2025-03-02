@@ -65,6 +65,8 @@ class ProfileEditPage extends StatelessWidget {
 
           if(state is OcupationSelected){
             _ocupationController.text = state.ocupationSelected.description;
+            _hourlyRateController.text = state.userOcupation.hourlyRate.toString();
+            _serviceFeeController.text = state.userOcupation.serviceFee.toString();
           }
         },
         child: BlocBuilder<MyprofileEditBloc, MyprofileEditState>(
@@ -80,62 +82,61 @@ class ProfileEditPage extends StatelessWidget {
             final myAbilities = getMyAbilities();
             
             onChangedNames(String nombre) {
-                        context
-                            .read<MyprofileEditBloc>()
-                            .add(NamesOnChanged(names: nombre));
-                      }
+              context
+                  .read<MyprofileEditBloc>()
+                  .add(NamesOnChanged(names: nombre));
+            }
             onChangedDescription(String description) {
-                        context.read<MyprofileEditBloc>().add(
-                            DescriptionOnChanged(description: description));
-                      }
+              context.read<MyprofileEditBloc>().add(
+                  DescriptionOnChanged(description: description));
+            }
             onChangedLastNames(apellidos) {
-                        context
-                            .read<MyprofileEditBloc>()
-                            .add(LastNamesOnChanged(lastNames: apellidos));
-                      }
+              context
+                  .read<MyprofileEditBloc>()
+                  .add(LastNamesOnChanged(lastNames: apellidos));
+            }
             onChangedPhone(telefono) {
-                        context
-                            .read<MyprofileEditBloc>()
-                            .add(PhoneOnChanged(phone: telefono));
-                      }
+              context
+                  .read<MyprofileEditBloc>()
+                  .add(PhoneOnChanged(phone: telefono));
+            }
             onTapSearchOcupation() async {
-                        final Ocupation? result = await UiUtil.openBottomSheet(
-                            context: context,
-                            constraints: BoxConstraints(
-                                maxHeight:
-                                    MediaQuery.of(context).size.height * 0.8),
-                            widget: _SearchOcupation());
-                        _ocupationController.text = result?.description ?? '';
-                      }
+              final Ocupation? result = await UiUtil.openBottomSheet(
+                  context: context,
+                  constraints: BoxConstraints(
+                      maxHeight:
+                          MediaQuery.of(context).size.height * 0.8),
+                  widget: _SearchOcupation());
+              _ocupationController.text = result?.description ?? '';
+            }
             onPressedShowAllAbilities() {
               context.read<MyprofileEditBloc>().add(ShowAllAbilitiesOnPress(showAll: true));
             }
             onPressedAddAbilitiesBottomSheet() async {
-                          await UiUtil.openBottomSheet(
-                              context: context,
-                              constraints: BoxConstraints(
-                                  maxHeight:
-                                      MediaQuery.of(context).size.height * 0.8),
-                              widget: _AddAbilities(userId: currentUser!.id));
-                        }
+              await UiUtil.openBottomSheet(
+                  context: context,
+                  constraints: BoxConstraints(
+                      maxHeight:
+                          MediaQuery.of(context).size.height * 0.8),
+                  widget: _AddAbilities(userId: currentUser!.id));
+            }
             onPressedSaveMyProfileChanges() {
-                          context.read<MyprofileEditBloc>().add(
-                            UpdateUserSaved(user: state.user)
-                          );
-                          context.read<MyprofileEditBloc>().add(
-                            InsertAbilitiesForUserPressed(abilitiesForUser: state.abilitiesByUser)
-                          );
-                          context.read<MyprofileEditBloc>().add(
-                            AssignOcupationToUserPressed(userOcupation: UserOcupation(
-                              userId: currentUser?.id ?? '',
-                              ocupationId: state.ocupationAdded.id.isEmpty
-                                ? state.ocupationSelected.id
-                                : state.ocupationAdded.id,
-                              
-                            ))
-                          );
-                          // context.pop();
-                        }
+              context.read<MyprofileEditBloc>().add(
+                UpdateUserSaved(user: state.user)
+              );
+              context.read<MyprofileEditBloc>().add(
+                InsertAbilitiesForUserPressed(abilitiesForUser: state.abilitiesByUser)
+              );
+              context.read<MyprofileEditBloc>().add(
+                AssignOcupationToUserPressed(
+                  userOcupation: state.userOcupation.copyWith(
+                    userId: currentUser?.id ?? '',
+                    ocupation: state.ocupationAdded.id.isEmpty
+                      ? state.ocupationSelected
+                      : state.ocupationAdded, 
+                ))
+              );
+            }
             return SingleChildScrollView(
               child: Container(
                 margin: const EdgeInsets.all(AppDefaults.padding),
@@ -222,7 +223,8 @@ class ProfileEditPage extends StatelessWidget {
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.next,
                                 onChanged: (value) {
-                                  
+                                  context.read<MyprofileEditBloc>()
+                                    .add(HourlyRateOnChanged(hourlyRate: double.tryParse(value) ?? 0.0));
                                 },
                               ),
                             ],
@@ -239,7 +241,8 @@ class ProfileEditPage extends StatelessWidget {
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.next,
                                 onChanged: (value) {
-                                  
+                                  context.read<MyprofileEditBloc>()
+                                    .add(ServiceFeeOnChanged(serviceFee: double.tryParse(value) ?? 0.0));
                                 },
                               ),
                             ],

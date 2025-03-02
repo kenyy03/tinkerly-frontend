@@ -11,9 +11,11 @@ sealed class MyprofileEditState extends Equatable {
     this.abilitiesFiltered = const [],
     this.abilitiesByUser = const [],
     this.showAll = false,
+    UserOcupation? userOcupation,
   }) 
     : ocupationSelected = ocupationSelected ?? Ocupation(description: ''),
       ocupationAdded = ocupationAdded ?? Ocupation(description: ''),
+      userOcupation = userOcupation ?? UserOcupation(),
       user = user ?? User(
         names: '', 
         lastNames: '', 
@@ -30,6 +32,7 @@ sealed class MyprofileEditState extends Equatable {
   final List<Ability> abilitiesFiltered;
   final List<UserAbility> abilitiesByUser;
   final bool showAll;
+  final UserOcupation userOcupation;
   
   @override
   List<Object> get props => [
@@ -41,7 +44,8 @@ sealed class MyprofileEditState extends Equatable {
     abilities,
     abilitiesFiltered,
     abilitiesByUser,
-    showAll
+    showAll,
+    userOcupation,
   ];
 }
 
@@ -65,6 +69,7 @@ final class MyprofileEditLoading extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
     this.message='Cargando...', 
   });
 }
@@ -80,6 +85,7 @@ final class OcupationsObtained extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -94,6 +100,7 @@ final class UserFilled extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -108,6 +115,7 @@ final class OcupationSelected extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -122,6 +130,7 @@ final class OcupationsFiltered extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -136,6 +145,7 @@ final class OcupationAdded extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -150,6 +160,7 @@ final class AbilitiesObtained extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -164,6 +175,7 @@ final class AbilitiesByUserObtained extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -178,6 +190,7 @@ final class AbilitiesSelected extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -192,6 +205,7 @@ final class AbilitiesFiltered extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser,
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -208,6 +222,7 @@ final class AbilityToSearchChanging extends MyprofileEditState {
     super.abilitiesFiltered,
     super.abilitiesByUser, 
     super.showAll,
+    super.userOcupation,
   });
 }
 
@@ -222,6 +237,7 @@ final class ShowAllAbilities extends MyprofileEditState {
     super.abilities,
     super.abilitiesFiltered,
     super.abilitiesByUser, 
+    super.userOcupation,
   });
 }
 
@@ -236,6 +252,7 @@ final class OcupationAssignedToUser extends MyprofileEditState {
     super.abilities,
     super.abilitiesFiltered,
     super.abilitiesByUser, 
+    super.userOcupation,
   });
 }
 
@@ -250,5 +267,21 @@ final class UserUpdated extends MyprofileEditState {
     super.abilities,
     super.abilitiesFiltered,
     super.abilitiesByUser, 
+    super.userOcupation,
+  });
+}
+
+final class UserOcupationFilled extends MyprofileEditState {
+  UserOcupationFilled({ 
+    super.abilities,
+    super.abilitiesByUser, 
+    super.abilitiesFiltered,
+    super.ocupationAdded,
+    super.ocupations, 
+    super.ocupationSelected, 
+    super.ocupationsFiltered, 
+    super.showAll,
+    super.user, 
+    super.userOcupation,
   });
 }
