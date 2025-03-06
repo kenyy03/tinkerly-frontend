@@ -11,6 +11,7 @@ class User {
   final String description;
   final Role role;
   final ImageProfile imageProfile;
+  final bool isPublicProfile;
 
   User({
     this.id = '',
@@ -22,6 +23,7 @@ class User {
     this.description = '',
     Role? role,
     ImageProfile? imageProfile,
+    this.isPublicProfile = false,
   }) : role = role ?? Role(description: ''),
    imageProfile = imageProfile ?? ImageProfile();
 
@@ -35,6 +37,7 @@ class User {
     description: json["description"],
     role: Role.fromMap(json['roleId']),
     imageProfile: ImageProfile.fromMap(json['imageProfile'] ?? ImageProfile().toJson()),
+    isPublicProfile: json['isPublicProfile'] ?? false,
   );
 
   Map<String, dynamic> toJson() => {
@@ -46,7 +49,8 @@ class User {
     "phone": phone,
     "description": description,
     'roleId': role.toJson(),
-    'imageProfile': imageProfile.toJson()
+    'imageProfile': imageProfile.toJson(),
+    'isPublicProfile': isPublicProfile
   };
 
   User copyWith({
@@ -59,6 +63,7 @@ class User {
     ,String? description
     ,Role? role
     ,ImageProfile? imageProfile
+    ,bool? isPublicProfile
   }){
     return User(
       id: id ?? this.id,
@@ -69,7 +74,8 @@ class User {
       phone: phone ?? this.phone, 
       description: description ?? this.description,
       role: role ?? this.role,
-      imageProfile: imageProfile ?? this.imageProfile
+      imageProfile: imageProfile ?? this.imageProfile,
+      isPublicProfile: isPublicProfile ?? this.isPublicProfile,
     );
   }
   

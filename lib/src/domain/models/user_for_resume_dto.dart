@@ -12,6 +12,7 @@ class UserForResumeDto {
   final Role role;
   final ImageProfile imageProfile;
   final UserOcupation userOcupation;
+  final bool isPublicProfile;
 
   UserForResumeDto({
     this.id = '',
@@ -24,6 +25,7 @@ class UserForResumeDto {
     Role? role,
     ImageProfile? imageProfile,
     UserOcupation? userOcupation,
+    this.isPublicProfile = false,
   }) : role = role ?? Role(description: ''),
    imageProfile = imageProfile ?? ImageProfile(),
    userOcupation = userOcupation ?? UserOcupation();
@@ -38,7 +40,8 @@ class UserForResumeDto {
     description: json["description"],
     role: Role.fromMap(json['roleId']),
     imageProfile: ImageProfile.fromMap(json['imageProfile'] ?? ImageProfile().toJson()),
-    userOcupation: UserOcupation.fromMap(json['userOcupation'] ?? UserOcupation().toJson())
+    userOcupation: UserOcupation.fromMap(json['userOcupation'] ?? UserOcupation().toJson()),
+    isPublicProfile: json['isPublicProfile'],
   );
 
   Map<String, dynamic> toJson() => {
@@ -52,6 +55,7 @@ class UserForResumeDto {
     'roleId': role.toJson(),
     'imageProfile': imageProfile.toJson(),
     'userOcupation': userOcupation.toJson(),
+    'isPublicProfile': isPublicProfile
   };
 
   UserForResumeDto copyWith({
@@ -65,6 +69,7 @@ class UserForResumeDto {
     ,Role? role
     ,ImageProfile? imageProfile
     ,UserOcupation? userOcupation
+    ,bool? isPublicProfile
   }){
     return UserForResumeDto(
       id: id ?? this.id,
@@ -76,7 +81,8 @@ class UserForResumeDto {
       description: description ?? this.description,
       role: role ?? this.role,
       imageProfile: imageProfile ?? this.imageProfile,
-      userOcupation: userOcupation ?? this.userOcupation
+      userOcupation: userOcupation ?? this.userOcupation,
+      isPublicProfile: isPublicProfile ?? this.isPublicProfile,
     );
   }
 }
