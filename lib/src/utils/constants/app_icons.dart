@@ -41,6 +41,7 @@ class AppIcons {
   static const fileContract = 'assets/icons/file_contract.svg';
   static const cameraOutlined = 'assets/icons/camera_outlined_icon.svg';
   static const review = 'assets/icons/review.svg';
+  static const publishProfile = 'assets/icons/publish_profile.svg';
 
   static const right = 'assets/icons/right.svg';
   static const profilePerson = 'assets/icons/profile_person.svg';

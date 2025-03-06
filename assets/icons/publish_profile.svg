@@ -1,0 +1,23 @@
+<svg
+  width="26"
+  height="26"
+  viewBox="0 0 26 26"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Nube -->
+  <path
+    d="M20.5 8C20.2 4.9 17.5 2.5 14.5 2.5C12.5 2.5 10.7 3.6 9.6 5.1C7.4 3.9 4.7 4.4 3 6.3C1.5 8 1 10.6 2 12.8C0.7 13.3 0 14.6 0 16C0 18.5 2 20.5 4.5 20.5H20C22.7 20.5 25 18.2 25 15.5C25 12.2 22.4 9.7 20.5 8Z"
+    fill="#40AA54"
+    stroke="#16162E"
+    stroke-width="1"
+    stroke-linejoin="round"
+  />
+  
+  <!-- Círculo para el icono -->
+  <circle cx="13" cy="18" r="6" fill="#EDEDED" stroke="#16162E" stroke-width="1"/>
+  
+  <!-- Flecha hacia arriba -->
+  <path d="M13 15V21" stroke="#16162E" stroke-width="2" stroke-linecap="round"/>
+  <path d="M10.5 18L13 15L15.5 18" stroke="#16162E" stroke-width="2" stroke-linecap="round"/>
+</svg>
