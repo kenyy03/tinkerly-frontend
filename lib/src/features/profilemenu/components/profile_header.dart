@@ -6,7 +6,7 @@ import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/services/stores/user_store.dart';
 import 'package:mobile_frontend/src/features/common/components/network_image.dart';
 import 'package:mobile_frontend/src/features/profilemenu/components/profile_header_options.dart';
-import 'package:mobile_frontend/src/features/profilemenu/cubit/image_picker_profile_cubit.dart';
+import 'package:mobile_frontend/src/features/profilemenu/cubits/imageprofilecubit/image_picker_profile_cubit.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -69,7 +69,6 @@ class _UserDataState extends State<_UserData> {
 
   void loadUser() {
     currentUser = userStored.get('user');
-    // context.read<ImagePickerProfileCubit>().onTakePhoto(imagePath: currentUser!.imageProfile.url);
     setState(() {});
   }
 
@@ -100,7 +99,6 @@ class _UserDataState extends State<_UserData> {
               child: ClipOval(
                 child: AspectRatio(
                     aspectRatio: 1 / 1,
-                    // child: Image.file(File(imagePath)),
                     child: NetworkImageWithLoader(currentUser!
                             .imageProfile.url.isEmpty
                         ? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
@@ -119,7 +117,6 @@ class _UserDataState extends State<_UserData> {
                         fontWeight: FontWeight.bold, color: Colors.white),
                     maxLines: 2,
                     softWrap: true,
-                    // overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
                   Text(

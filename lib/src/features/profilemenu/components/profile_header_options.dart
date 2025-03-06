@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/services/camera_service.dart';
 import 'package:mobile_frontend/src/features/profilemenu/components/profile_square_tile.dart';
-import 'package:mobile_frontend/src/features/profilemenu/cubit/image_picker_profile_cubit.dart';
+import 'package:mobile_frontend/src/features/profilemenu/cubits/imageprofilecubit/image_picker_profile_cubit.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 import 'package:mobile_frontend/src/utils/helpers/helper.dart';
 
@@ -15,6 +15,23 @@ class ProfileHeaderOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    onTapOpenManagePhoto() async {
+      final ImageDto result = await UiUtil.openBottomSheet(
+        context: context,
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.35),
+        widget: _ManagmentProfilePhoto()
+      );
+      if(context.mounted){
+        if(result.esEliminarFoto){
+          context.read<ImagePickerProfileCubit>()
+            .onDeleteImageProfileUrl(isDelete: result.esEliminarFoto);
+        }else{
+          context.read<ImagePickerProfileCubit>()
+            .onSelectedPhotoFromGallery(imagePath: result.path);
+        }
+      }
+    }
     return Container(
       margin: const EdgeInsets.all(AppDefaults.padding),
       padding: const EdgeInsets.all(AppDefaults.padding),
@@ -36,21 +53,7 @@ class ProfileHeaderOptions extends StatelessWidget {
           ProfileSquareTile(
             label: 'Foto',
             icon: AppIcons.cameraOutlined,
-            onTap: () async {
-              final ImageDto result = await UiUtil.openBottomSheet(
-                context: context,
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.35),
-                widget: _ManagmentProfilePhoto()
-              );
-              if(context.mounted){
-                if(result.esEliminarFoto){
-                  context.read<ImagePickerProfileCubit>().onDeleteImageProfileUrl(isDelete: result.esEliminarFoto);
-                }else{
-                  context.read<ImagePickerProfileCubit>().onSelectedPhotoFromGallery(imagePath: result.path);
-                }
-              }
-            },
+            onTap: onTapOpenManagePhoto,
           ),
           ProfileSquareTile(
             label: 'Reseñas',
@@ -101,7 +104,9 @@ class _ManagmentProfilePhoto extends StatelessWidget {
                       .titleLarge
                       ?.copyWith(fontWeight: FontWeight.bold)),
               IconButton(
-                  onPressed: () => context.pop(), icon: Icon(Icons.close))
+                onPressed: () => context.pop(ImageDto(path: '', esEliminarFoto: false)), 
+                icon: Icon(Icons.close)
+              )
             ],
           ),
         ),
