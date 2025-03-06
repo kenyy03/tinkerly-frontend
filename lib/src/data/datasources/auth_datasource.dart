@@ -97,9 +97,10 @@ class AuthDataSource extends IAuthDataSource {
   }
 
   @override
-  Future<User> updateUser({required User user}) async {
+  Future<User> updateUser({required User user, bool isDelete = false}) async {
     try {
-      Uri uri = Uri.parse('${environment.baseUrl}/update-user');
+      Uri uri = Uri.parse('${environment.baseUrl}/update-user')
+        .replace(queryParameters: {'isDelete': isDelete.toString()});
       String body = json.encode(user.toJson());
       final response = await http.put(
         uri, 

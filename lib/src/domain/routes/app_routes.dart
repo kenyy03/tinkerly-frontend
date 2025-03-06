@@ -7,8 +7,8 @@ class AppRoutes {
   static const login = '/login';
   static const joinAsRole = '/joinAsRole';
   static const signup = '/signup/:roleId';
-  static const loginOrSignup = '/loginOrSignup';
-  static const numberVerification = '/numberVerification';
+  // static const loginOrSignup = '/loginOrSignup';
+  // static const numberVerification = '/numberVerification';
   static const forgotPassword = '/forgotPassword';
   static const passwordReset = '/passwordReset';
 
@@ -19,10 +19,10 @@ class AppRoutes {
   static const home = '/home';
   static const newItems = '/newItems';
   static const popularItems = '/popularItems';
-  static const bundleProduct = '/bundleProduct';
+  static const profileItems = '/profileItems';
   static const createMyPack = '/createMyPack';
   static const bundleDetailsPage = '/bundleDetailsPage';
-  static const productDetails = '/productDetails';
+  static const profileDetails = '/profileDetails';
   static const cartPage = '/cartPage';
   static const savePage = '/favouriteList';
   static const checkoutPage = '/checkoutPage';

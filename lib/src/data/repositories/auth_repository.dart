@@ -23,8 +23,8 @@ class AuthRepository extends IAuthRepository {
   }
   
   @override
-  Future<User> updateUser({required User user}) {
-    return _datasource.updateUser(user: user);
+  Future<User> updateUser({required User user, bool isDelete = false}) {
+    return _datasource.updateUser(user: user, isDelete: isDelete);
   }
   
   @override
