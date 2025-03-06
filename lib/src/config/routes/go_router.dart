@@ -9,12 +9,14 @@ import 'package:mobile_frontend/src/features/joinas/cubit/role_radio_button_cubi
 import 'package:mobile_frontend/src/features/joinas/join_as_screen.dart';
 import 'package:mobile_frontend/src/features/login/bloc/login_bloc.dart';
 import 'package:mobile_frontend/src/features/login/login_screen.dart';
-import 'package:mobile_frontend/src/features/profile/cubit/image_picker_profile_cubit.dart';
-import 'package:mobile_frontend/src/features/profile/profile_screen.dart';
-import 'package:mobile_frontend/src/features/profile/screens/directions/bloc/address_bloc.dart';
-import 'package:mobile_frontend/src/features/profile/screens/directions/directions_screen.dart';
-import 'package:mobile_frontend/src/features/profile/screens/myprofile/bloc/myprofile_edit_bloc.dart';
-import 'package:mobile_frontend/src/features/profile/screens/myprofile/profile_edit_screen.dart';
+import 'package:mobile_frontend/src/features/profilemenu/cubits/imageprofilecubit/image_picker_profile_cubit.dart';
+import 'package:mobile_frontend/src/features/profilemenu/cubits/switchcubit/switch_cubit.dart';
+import 'package:mobile_frontend/src/features/profilemenu/profile_screen.dart';
+import 'package:mobile_frontend/src/features/profilemenu/screens/directions/bloc/address_bloc.dart';
+import 'package:mobile_frontend/src/features/profilemenu/screens/directions/directions_screen.dart';
+import 'package:mobile_frontend/src/features/profilemenu/screens/myprofile/bloc/myprofile_edit_bloc.dart';
+import 'package:mobile_frontend/src/features/profilemenu/screens/myprofile/profile_edit_screen.dart';
+import 'package:mobile_frontend/src/features/profileitem/profile_item_screen.dart';
 import 'package:mobile_frontend/src/features/signup/bloc/signup_bloc.dart';
 import 'package:mobile_frontend/src/features/signup/signup_screen.dart';
 
@@ -79,7 +81,12 @@ final router = GoRouter(
                 create: (context) => HomeCubit(
                   authRepository: AuthRepository(datasource: AuthDataSource()) 
                 )
-              )
+              ),
+              BlocProvider(
+                create: (context) => SwitchCubit(
+                  repository: AuthRepository(datasource: AuthDataSource())
+                ),
+              ),
             ],
             child: EntryPointUi(navigationShell: navigationShell),
           );
@@ -124,8 +131,20 @@ final router = GoRouter(
                       return DirectionsScreen(currentUserId: userId);
                     },
                   ),
-                ])
+                ]),
           ]),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.profileItems,
+                name: ProfileItemScreen.routeName,
+                builder: (context, state) {
+                  
+                  return ProfileItemScreen();
+                },
+              ),
+            ] 
+          )
         ])
   ],
 );
