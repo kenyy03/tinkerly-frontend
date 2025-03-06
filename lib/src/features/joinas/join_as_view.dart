@@ -104,7 +104,7 @@ class JoinAsView extends StatelessWidget {
                                   return;
                                 }
                                 roleStore.save('roles', state.roles);
-                                context.push(
+                                context.pushReplacement(
                                   AppRoutes.signup.replaceFirst(
                                     ':roleId', 
                                     state.roles.firstWhere((role) => role.isSelected ).id
