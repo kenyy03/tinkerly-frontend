@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/services/camera_service.dart';
-import 'package:mobile_frontend/src/features/profile/components/profile_square_tile.dart';
-import 'package:mobile_frontend/src/features/profile/cubit/image_picker_profile_cubit.dart';
+import 'package:mobile_frontend/src/features/profilemenu/components/profile_square_tile.dart';
+import 'package:mobile_frontend/src/features/profilemenu/cubit/image_picker_profile_cubit.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 import 'package:mobile_frontend/src/utils/helpers/helper.dart';
 
@@ -45,7 +45,7 @@ class ProfileHeaderOptions extends StatelessWidget {
               );
               if(context.mounted){
                 if(result.esEliminarFoto){
-                  print('Eliminar foto');
+                  context.read<ImagePickerProfileCubit>().onDeleteImageProfileUrl(isDelete: result.esEliminarFoto);
                 }else{
                   context.read<ImagePickerProfileCubit>().onSelectedPhotoFromGallery(imagePath: result.path);
                 }

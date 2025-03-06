@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/components/app_back_button.dart';
 import 'package:mobile_frontend/src/features/common/services/stores/user_store.dart';
-import 'package:mobile_frontend/src/features/profile/screens/myprofile/bloc/myprofile_edit_bloc.dart';
+import 'package:mobile_frontend/src/features/profilemenu/screens/myprofile/bloc/myprofile_edit_bloc.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 import 'package:mobile_frontend/src/utils/helpers/helper.dart';
 
@@ -194,6 +194,7 @@ class ProfileEditPage extends StatelessWidget {
                       maxLines: 2,
                       onChanged: onChangedDescription,
                       controller: _descriptionController,
+                      enableSuggestions: false,
                     ),
                     const SizedBox(height: AppDefaults.padding),
 

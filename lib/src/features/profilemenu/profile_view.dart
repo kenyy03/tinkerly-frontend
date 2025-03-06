@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_frontend/src/features/profile/components/profile_header.dart';
-import 'package:mobile_frontend/src/features/profile/components/profile_menu_options.dart';
+import 'package:mobile_frontend/src/features/profilemenu/components/profile_header.dart';
+import 'package:mobile_frontend/src/features/profilemenu/components/profile_menu_options.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 class ProfileView extends StatelessWidget {

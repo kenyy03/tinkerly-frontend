@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/services/stores/user_store.dart';
 import 'package:mobile_frontend/src/features/common/components/network_image.dart';
-import 'package:mobile_frontend/src/features/profile/components/profile_header_options.dart';
-import 'package:mobile_frontend/src/features/profile/cubit/image_picker_profile_cubit.dart';
+import 'package:mobile_frontend/src/features/profilemenu/components/profile_header_options.dart';
+import 'package:mobile_frontend/src/features/profilemenu/cubit/image_picker_profile_cubit.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 class ProfileHeader extends StatelessWidget {

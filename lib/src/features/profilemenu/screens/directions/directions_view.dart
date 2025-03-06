@@ -3,7 +3,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/components/app_back_button.dart';
-import 'package:mobile_frontend/src/features/profile/screens/directions/bloc/address_bloc.dart';
+import 'package:mobile_frontend/src/features/profilemenu/screens/directions/bloc/address_bloc.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 import 'package:mobile_frontend/src/utils/helpers/helper.dart';
 import 'package:quickalert/quickalert.dart';

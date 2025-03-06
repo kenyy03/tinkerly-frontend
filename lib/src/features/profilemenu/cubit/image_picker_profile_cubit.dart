@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
+import 'package:mobile_frontend/src/features/common/services/services.dart';
 
 part 'image_picker_profile_state.dart';
 
@@ -31,6 +32,27 @@ class ImagePickerProfileCubit extends Cubit<ImagePickerProfileState> {
       }
       emit(ImageProfileLoading(imageProfilePath: state.imageProfilePath));
       final response = await _repository.uploadImageProfile(file: file, id: id);
+
+      emit(ImageProfileUploaded(imageProfilePath: response.imageProfile.url));
+    } catch (e) {
+      emit(ImageProfileFailure(messageError: e.toString()));
+    }
+  }
+
+  void onDeleteImageProfileUrl({ required isDelete }) async {
+    try {
+      final currentUserLogged = UserStorage().get('user');
+      final response = await _repository.updateUser(
+        user: User(
+          names: '', 
+          lastNames: '', 
+          email: '', 
+          password: '', 
+          phone: '',
+          id: currentUserLogged!.id
+        ),
+        isDelete: isDelete
+      );
 
       emit(ImageProfileUploaded(imageProfilePath: response.imageProfile.url));
     } catch (e) {
