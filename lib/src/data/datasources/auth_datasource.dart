@@ -100,7 +100,7 @@ class AuthDataSource extends IAuthDataSource {
   Future<User> updateUser({required User user, bool isDelete = false}) async {
     try {
       Uri uri = Uri.parse('${environment.baseUrl}/update-user')
-        .replace(queryParameters: {'isDelete': isDelete.toString()});
+        .replace(queryParameters: {'isDelete': isDelete.toString()} as Map<String,dynamic>);
       String body = json.encode(user.toJson());
       final response = await http.put(
         uri, 
@@ -141,6 +141,30 @@ class AuthDataSource extends IAuthDataSource {
       final stored = UsersStorage();
       await stored.save('usersHome', usersHome);
       return usersHome;
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+  
+  @override
+  Future<User> publishProfile({required bool isPublicProfile, required String userId}) async {
+    try {
+      Uri uri = Uri.parse('${environment.baseUrl}/public-profile');
+      final response = await http.put(
+        uri, 
+        headers: { 'Content-Type': 'application/json', }, 
+        body: json.encode({ '_id': userId, 'isPublicProfile': isPublicProfile } as Map<String,dynamic>),
+      );
+
+      if(response.statusCode != 200){
+        return Future.error(json.decode(response.body)['message']);
+      }
+
+      final jsonResponse = json.decode(response.body) as Map<String,dynamic>;
+      final userResponse = User.fromMap(jsonResponse['data']);
+      final stored = UserStorage();
+      await stored.save('user', userResponse);
+      return userResponse;
     } catch (e) {
       return Future.error(e);
     }
