@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/services/services.dart';
 import 'package:mobile_frontend/src/features/profilemenu/components/profile_list_tile.dart';
+import 'package:mobile_frontend/src/features/profilemenu/cubits/switchcubit/switch_cubit.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 class ProfileMenuOptions extends StatelessWidget {
@@ -15,7 +17,7 @@ class ProfileMenuOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = userStored.get('user');
+    User? currentUser = userStored.get('user');
     return Container(
       margin: const EdgeInsets.all(AppDefaults.padding),
       padding: const EdgeInsets.all(AppDefaults.padding),
@@ -29,7 +31,8 @@ class ProfileMenuOptions extends StatelessWidget {
           ProfileListTile(
             title: 'Mi Perfil',
             icon: AppIcons.profilePerson,
-            onTap: () => context.push('${AppRoutes.profile}${AppRoutes.profileEdit.replaceFirst(':userId', currentUser!.id)}'),
+            onTap: () => context.push(
+                '${AppRoutes.profile}${AppRoutes.profileEdit.replaceFirst(':userId', currentUser!.id)}'),
           ),
           const Divider(thickness: 0.1),
           ProfileListTile(
@@ -37,8 +40,7 @@ class ProfileMenuOptions extends StatelessWidget {
             icon: AppIcons.homeProfile,
             onTap: () {
               context.push(
-                '${AppRoutes.profile}${AppRoutes.newAddress.replaceFirst(':userId', currentUser!.id)}'
-              );
+                  '${AppRoutes.profile}${AppRoutes.newAddress.replaceFirst(':userId', currentUser!.id)}');
             },
           ),
           const Divider(thickness: 0.1),
@@ -48,11 +50,33 @@ class ProfileMenuOptions extends StatelessWidget {
             onTap: () => context.push(AppRoutes.settings),
           ),
           const Divider(thickness: 0.1),
-          // ProfileListTile(
-          //   title: 'Payment',
-          //   icon: AppIcons.profilePayment,
-          //   onTap: () => context.push(AppRoutes.paymentMethod),
-          // ),
+          BlocBuilder<SwitchCubit, SwitchState>(
+            builder: (context, state) {
+              currentUser = currentUser!.copyWith(isPublicProfile: state.isActive);
+              return ProfileListTile(
+                onTap: () {
+                  context.read<SwitchCubit>()
+                    .publishProfile(
+                      isPublicProfile: !currentUser!.isPublicProfile, 
+                      userId: currentUser!.id
+                    );
+                },
+                icon: AppIcons.publishProfile,
+                title: 'Publicar perfil',
+                renderWidget: true,
+                child: Switch(
+                  value: currentUser!.isPublicProfile,
+                  onChanged: (bool active) {
+                    context.read<SwitchCubit>()
+                      .publishProfile(
+                        isPublicProfile: active, 
+                        userId: currentUser!.id
+                      );
+                  },
+                ),
+              );
+            },
+          ),
           const Divider(thickness: 0.1),
           ProfileListTile(
             title: 'Logout',

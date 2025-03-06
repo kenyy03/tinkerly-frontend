@@ -8,11 +8,15 @@ class ProfileListTile extends StatelessWidget {
     required this.onTap,
     required this.icon,
     required this.title,
+    this.renderWidget = false,
+    this.child = const SizedBox.shrink(),
   });
 
   final void Function() onTap;
   final String icon;
   final String title;
+  final Widget child;
+  final bool renderWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,8 @@ class ProfileListTile extends StatelessWidget {
                     ?.copyWith(color: Colors.black),
               ),
               const Spacer(),
-              SvgPicture.asset(AppIcons.right),
+              !renderWidget ? SvgPicture.asset(AppIcons.right)
+                : child,
             ],
           ),
         ),
