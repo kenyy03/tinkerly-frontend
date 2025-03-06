@@ -22,7 +22,7 @@ class BottomAppBarItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: AppDefaults.padding),
-        width: MediaQuery.of(context).size.width / 2.2,
+        width: MediaQuery.of(context).size.width / 3.3,
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           children: [

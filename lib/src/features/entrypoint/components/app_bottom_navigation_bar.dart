@@ -32,12 +32,12 @@ class AppBottomNavigationBar extends StatelessWidget {
               border: Border.all(color: AppColors.gray)
             ),
           ),
-          // BottomAppBarItem(
-          //   name: 'Menu',
-          //   iconLocation: AppIcons.menu,
-          //   isActive: currentIndex == 1,
-          //   onTap: () => onNavTap(1),
-          // ),
+          BottomAppBarItem(
+            name: 'Perfiles',
+            iconLocation: AppIcons.profilePerson,
+            isActive: currentIndex == 2,
+            onTap: () => onNavTap(2),
+          ),
           // const Padding(
           //   padding: EdgeInsets.all(AppDefaults.padding * 2),
           //   child: SizedBox(width: AppDefaults.margin),
@@ -50,8 +50,13 @@ class AppBottomNavigationBar extends StatelessWidget {
           //   isActive: currentIndex == 3,
           //   onTap: () => onNavTap(3),
           // ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.gray)
+            ),
+          ),
           BottomAppBarItem(
-            name: 'Perfil',
+            name: 'Mi Perfil',
             iconLocation: AppIcons.profile,
             isActive: currentIndex == 1,
             onTap: () => onNavTap(1),
