@@ -16,7 +16,7 @@ import 'package:mobile_frontend/src/features/profilemenu/screens/directions/bloc
 import 'package:mobile_frontend/src/features/profilemenu/screens/directions/directions_screen.dart';
 import 'package:mobile_frontend/src/features/profilemenu/screens/myprofile/bloc/myprofile_edit_bloc.dart';
 import 'package:mobile_frontend/src/features/profilemenu/screens/myprofile/profile_edit_screen.dart';
-import 'package:mobile_frontend/src/features/profileitem/profile_item_screen.dart';
+import 'package:mobile_frontend/src/features/professionalitem/professional_item_screen.dart';
 import 'package:mobile_frontend/src/features/signup/bloc/signup_bloc.dart';
 import 'package:mobile_frontend/src/features/signup/signup_screen.dart';
 
@@ -137,10 +137,10 @@ final router = GoRouter(
             routes: [
               GoRoute(
                 path: AppRoutes.profileItems,
-                name: ProfileItemScreen.routeName,
+                name: ProfessionalItemScreen.routeName,
                 builder: (context, state) {
                   
-                  return ProfileItemScreen();
+                  return ProfessionalItemScreen();
                 },
               ),
             ] 

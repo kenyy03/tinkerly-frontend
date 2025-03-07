@@ -4,8 +4,8 @@ import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 import 'network_image.dart';
 
-class BundleTileSquare extends StatelessWidget {
-  const BundleTileSquare({
+class UserResumeTileSquare extends StatelessWidget {
+  const UserResumeTileSquare({
     super.key,
     required this.data,
   });

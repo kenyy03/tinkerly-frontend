@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_frontend/src/features/home/components/ad_space.dart';
-import 'package:mobile_frontend/src/features/home/components/popular_packs.dart';
+import 'package:mobile_frontend/src/features/home/components/popular_users.dart';
 import 'package:mobile_frontend/src/features/home/cubit/home_cubit.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
@@ -45,7 +45,7 @@ class HomeView extends StatelessWidget {
             BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {
                 return SliverToBoxAdapter(
-                  child: PopularPacks(usersData: state.usersHome),
+                  child: PopularUsers(usersData: state.usersHome),
                 );
               },
             ),

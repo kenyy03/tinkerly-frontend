@@ -3,8 +3,8 @@ import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/components/network_image.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
-class ProfileTileSquare extends StatelessWidget {
-  const ProfileTileSquare({super.key});
+class ProfessionalItemTileSquare extends StatelessWidget {
+  const ProfessionalItemTileSquare({super.key});
 
   @override
   Widget build(BuildContext context) {
