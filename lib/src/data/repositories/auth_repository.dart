@@ -36,4 +36,9 @@ class AuthRepository extends IAuthRepository {
   Future<User> publishProfile({required bool isPublicProfile, required String userId}) {
     return _datasource.publishProfile(isPublicProfile: isPublicProfile, userId: userId);
   }
+  
+  @override
+  Future<List<UserPublic>> getUsersByIsPublicProfile() {
+    return _datasource.getUsersByIsPublicProfile();
+  }
 }

@@ -9,4 +9,5 @@ abstract class IAuthRepository {
   Future<User> updateUser({required User user, bool isDelete});
   Future<List<UserForResumeDto>> getUserForHomeResume();
   Future<User> publishProfile({ required bool isPublicProfile, required String userId });
+  Future<List<UserPublic>> getUsersByIsPublicProfile();
 }

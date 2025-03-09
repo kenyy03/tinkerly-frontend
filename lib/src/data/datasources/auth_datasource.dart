@@ -169,4 +169,25 @@ class AuthDataSource extends IAuthDataSource {
       return Future.error(e);
     }
   }
+  
+  @override
+  Future<List<UserPublic>> getUsersByIsPublicProfile() async {
+    try {
+      Uri uri = Uri.parse('${environment.baseUrl}/get-users-by-is-public-profile');
+      final response = await http.get(
+        uri, 
+        headers: { 'Content-Type': 'application/json', }, 
+      );
+
+      if(response.statusCode != 200){
+        return Future.error(json.decode(response.body)['message']);
+      }
+
+      final jsonResponse = json.decode(response.body) as Map<String,dynamic>;
+      final usersResponse = List.from(jsonResponse['data']);
+      return usersResponse.map((e) => UserPublic.fromMap(e)).toList();
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
 }
