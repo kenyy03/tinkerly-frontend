@@ -9,6 +9,7 @@ import 'package:mobile_frontend/src/features/joinas/cubit/role_radio_button_cubi
 import 'package:mobile_frontend/src/features/joinas/join_as_screen.dart';
 import 'package:mobile_frontend/src/features/login/bloc/login_bloc.dart';
 import 'package:mobile_frontend/src/features/login/login_screen.dart';
+import 'package:mobile_frontend/src/features/professionalitem/cubit/professional_cubit.dart';
 import 'package:mobile_frontend/src/features/profilemenu/cubits/imageprofilecubit/image_picker_profile_cubit.dart';
 import 'package:mobile_frontend/src/features/profilemenu/cubits/switchcubit/switch_cubit.dart';
 import 'package:mobile_frontend/src/features/profilemenu/profile_screen.dart';
@@ -87,6 +88,11 @@ final router = GoRouter(
                   repository: AuthRepository(datasource: AuthDataSource())
                 ),
               ),
+              BlocProvider(
+                create: (context) => ProfessionalCubit(
+                  authRepository: AuthRepository(datasource: AuthDataSource())
+                ),
+              ),
             ],
             child: EntryPointUi(navigationShell: navigationShell),
           );
@@ -139,7 +145,7 @@ final router = GoRouter(
                 path: AppRoutes.profileItems,
                 name: ProfessionalItemScreen.routeName,
                 builder: (context, state) {
-                  
+                  context.read<ProfessionalCubit>().getPublicUsers();
                   return ProfessionalItemScreen();
                 },
               ),

@@ -1,5 +1,4 @@
 import 'package:mobile_frontend/src/domain/domain.dart';
-import 'package:mobile_frontend/src/domain/models/image_profile.dart';
 
 class UserForResumeDto {
   final String id;

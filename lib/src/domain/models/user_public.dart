@@ -1,6 +1,6 @@
 import 'package:mobile_frontend/src/domain/domain.dart';
 
-class User {
+class UserPublic {
   final String id;
   final String names;
   final String lastNames;
@@ -10,9 +10,14 @@ class User {
   final String description;
   final Role role;
   final ImageProfile imageProfile;
+  final Address address;
+  final UserOcupation userOcupation;
+  final List<UserAbility> userAbilities;
+  final List<Review> reviews;
   final bool isPublicProfile;
+  final double averageRating;
 
-  User({
+  UserPublic({
     this.id = '',
     required this.names, 
     required this.lastNames, 
@@ -22,11 +27,18 @@ class User {
     this.description = '',
     Role? role,
     ImageProfile? imageProfile,
+    Address? address,
+    UserOcupation? userOcupation, 
     this.isPublicProfile = false,
+    this.userAbilities = const [],
+    this.reviews = const [],
+    this.averageRating = 0.0
   }) : role = role ?? Role(description: ''),
-   imageProfile = imageProfile ?? ImageProfile();
+   imageProfile = imageProfile ?? ImageProfile(),
+   address = address ?? Address(),
+   userOcupation = userOcupation ?? UserOcupation();
 
-  factory User.fromMap(Map<String, dynamic> json) => User(
+  factory UserPublic.fromMap(Map<String, dynamic> json) => UserPublic(
     id: json["_id"],
     names: json['names'],
     lastNames: json['lastNames'],
@@ -37,6 +49,11 @@ class User {
     role: Role.fromMap(json['roleId']),
     imageProfile: ImageProfile.fromMap(json['imageProfile'] ?? ImageProfile().toJson()),
     isPublicProfile: json['isPublicProfile'] ?? false,
+    address: Address.fromMap(json['address']),
+    userOcupation: UserOcupation.fromMap(json['userOcupation']),
+    userAbilities: List.from(json['userAbilities']).map((e) => UserAbility.fromMap(e)).toList(),
+    reviews: List.from(json['reviews']).map((e) => Review.fromMap(e)).toList(),
+    averageRating: double.tryParse(json['averageRating'] ?? '0.0' ) ?? 0.0
   );
 
   Map<String, dynamic> toJson() => {
@@ -49,10 +66,15 @@ class User {
     "description": description,
     'roleId': role.toJson(),
     'imageProfile': imageProfile.toJson(),
-    'isPublicProfile': isPublicProfile
+    'isPublicProfile': isPublicProfile,
+    'address': address.toJson(),
+    'userOcupation': userOcupation.toJson(),
+    'userAbilities': userAbilities.map((e) => e.toJson()).toList(),
+    'reviews': reviews.map((e) => e.toJson()).toList(),
+    'averageRating': averageRating,
   };
 
-  User copyWith({
+  UserPublic copyWith({
     String? id
     ,String? names
     ,String? lastNames
@@ -62,9 +84,14 @@ class User {
     ,String? description
     ,Role? role
     ,ImageProfile? imageProfile
+    ,Address? address
+    ,UserOcupation? userOcupation
+    ,List<UserAbility>? userAbilities
+    ,List<Review>? reviews
     ,bool? isPublicProfile
+    ,double? averageRating
   }){
-    return User(
+    return UserPublic(
       id: id ?? this.id,
       names: names ?? this.names, 
       lastNames: lastNames ?? this.lastNames, 
@@ -74,8 +101,12 @@ class User {
       description: description ?? this.description,
       role: role ?? this.role,
       imageProfile: imageProfile ?? this.imageProfile,
+      address: address ?? this.address,
+      userOcupation: userOcupation ?? this.userOcupation,
       isPublicProfile: isPublicProfile ?? this.isPublicProfile,
+      userAbilities: userAbilities ?? this.userAbilities,
+      reviews: reviews ?? this.reviews,
+      averageRating: averageRating ?? this.averageRating,
     );
   }
-  
 }
