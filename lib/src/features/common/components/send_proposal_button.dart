@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 
-class BuyNowRow extends StatelessWidget {
-  const BuyNowRow({
+class SendProposalButton extends StatelessWidget {
+  const SendProposalButton({
     super.key,
-    required this.onCartButtonTap,
-    required this.onBuyButtonTap,
+    // required this.onCartButtonTap,
+    required this.onSendProposalButtonTap,
   });
 
-  final void Function() onCartButtonTap;
-  final void Function() onBuyButtonTap;
+  // final void Function() onCartButtonTap;
+  final void Function() onSendProposalButtonTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +20,13 @@ class BuyNowRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          OutlinedButton(
-            onPressed: onCartButtonTap,
-            child: SvgPicture.asset(AppIcons.shoppingCart),
-          ),
-          const SizedBox(width: AppDefaults.padding),
           Expanded(
             child: ElevatedButton(
-              onPressed: onBuyButtonTap,
+              onPressed: onSendProposalButtonTap,
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(AppDefaults.padding * 1.2),
               ),
-              child: const Text('Buy Now'),
+              child: const Text('Enviar Propuesta'),
             ),
           ),
         ],
