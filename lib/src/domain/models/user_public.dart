@@ -53,7 +53,7 @@ class UserPublic {
     userOcupation: UserOcupation.fromMap(json['userOcupation']),
     userAbilities: List.from(json['userAbilities']).map((e) => UserAbility.fromMap(e)).toList(),
     reviews: List.from(json['reviews']).map((e) => Review.fromMap(e)).toList(),
-    averageRating: double.tryParse(json['averageRating'] ?? '0.0' ) ?? 0.0
+    averageRating: double.tryParse(json['averageRating'].toString()) ?? 0.0
   );
 
   Map<String, dynamic> toJson() => {
