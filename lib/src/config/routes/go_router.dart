@@ -9,7 +9,9 @@ import 'package:mobile_frontend/src/features/joinas/cubit/role_radio_button_cubi
 import 'package:mobile_frontend/src/features/joinas/join_as_screen.dart';
 import 'package:mobile_frontend/src/features/login/bloc/login_bloc.dart';
 import 'package:mobile_frontend/src/features/login/login_screen.dart';
+import 'package:mobile_frontend/src/features/professionaldetails/professional_details_screen.dart';
 import 'package:mobile_frontend/src/features/professionalitem/cubit/professional_cubit.dart';
+import 'package:mobile_frontend/src/features/professionalitem/professional_item_screen.dart';
 import 'package:mobile_frontend/src/features/profilemenu/cubits/imageprofilecubit/image_picker_profile_cubit.dart';
 import 'package:mobile_frontend/src/features/profilemenu/cubits/switchcubit/switch_cubit.dart';
 import 'package:mobile_frontend/src/features/profilemenu/profile_screen.dart';
@@ -17,7 +19,6 @@ import 'package:mobile_frontend/src/features/profilemenu/screens/directions/bloc
 import 'package:mobile_frontend/src/features/profilemenu/screens/directions/directions_screen.dart';
 import 'package:mobile_frontend/src/features/profilemenu/screens/myprofile/bloc/myprofile_edit_bloc.dart';
 import 'package:mobile_frontend/src/features/profilemenu/screens/myprofile/profile_edit_screen.dart';
-import 'package:mobile_frontend/src/features/professionalitem/professional_item_screen.dart';
 import 'package:mobile_frontend/src/features/signup/bloc/signup_bloc.dart';
 import 'package:mobile_frontend/src/features/signup/signup_screen.dart';
 
@@ -91,7 +92,7 @@ final router = GoRouter(
               BlocProvider(
                 create: (context) => ProfessionalCubit(
                   authRepository: AuthRepository(datasource: AuthDataSource())
-                ),
+                )..getPublicUsers(),
               ),
             ],
             child: EntryPointUi(navigationShell: navigationShell),
@@ -145,9 +146,18 @@ final router = GoRouter(
                 path: AppRoutes.profileItems,
                 name: ProfessionalItemScreen.routeName,
                 builder: (context, state) {
-                  context.read<ProfessionalCubit>().getPublicUsers();
                   return ProfessionalItemScreen();
                 },
+                routes: [
+                  GoRoute(
+                    path: AppRoutes.profileDetails,
+                    name: ProfessionalDetailsScreen.routeName,
+                    builder: (context, GoRouterState state) {
+                      final currentUserSelected = UserPublic.fromMap((state.extra as Map<String,dynamic>));
+                      return ProfessionalDetailsScreen(userSelected: currentUserSelected);
+                    },
+                  )
+                ]
               ),
             ] 
           )
