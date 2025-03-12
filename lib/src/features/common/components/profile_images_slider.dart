@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
+import 'network_image.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter/material.dart';
+import 'package:mobile_frontend/src/features/professionaldetails/components/animated_dots.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
-// import '../../views/home/components/animated_dots.dart';
-import 'network_image.dart';
-
-class ProductImagesSlider extends StatefulWidget {
-  const ProductImagesSlider({
+class ProfileImagesSlider extends StatefulWidget {
+  const ProfileImagesSlider({
     super.key,
     required this.images,
   });
@@ -14,13 +13,12 @@ class ProductImagesSlider extends StatefulWidget {
   final List<String> images;
 
   @override
-  State<ProductImagesSlider> createState() => _ProductImagesSliderState();
+  State<ProfileImagesSlider> createState() => _ProfileImagesSliderState();
 }
 
-class _ProductImagesSliderState extends State<ProductImagesSlider> {
+class _ProfileImagesSliderState extends State<ProfileImagesSlider> {
   late PageController controller;
   int currentIndex = 0;
-
   List<String> images = [];
 
   @override
@@ -44,7 +42,7 @@ class _ProductImagesSliderState extends State<ProductImagesSlider> {
         color: AppColors.coloredBackground,
         borderRadius: AppDefaults.borderRadius,
       ),
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height * 0.43,
       child: Stack(
         children: [
           Column(
@@ -63,7 +61,7 @@ class _ProductImagesSliderState extends State<ProductImagesSlider> {
                         aspectRatio: 1 / 1,
                         child: NetworkImageWithLoader(
                           images[index],
-                          fit: BoxFit.contain,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     );
@@ -73,11 +71,10 @@ class _ProductImagesSliderState extends State<ProductImagesSlider> {
               ),
               Padding(
                 padding: const EdgeInsets.all(AppDefaults.padding),
-                child: Text('Colocar nueva images'),
-                // child: AnimatedDots(
-                //   totalItems: images.length,
-                //   currentIndex: currentIndex,
-                // ),
+                child: AnimatedDots(
+                  totalItems: images.length,
+                  currentIndex: currentIndex,
+                ),
               )
             ],
           ),
