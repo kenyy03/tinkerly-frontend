@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 
@@ -24,10 +25,11 @@ class ReviewRowButton extends StatelessWidget {
                 ),
           ),
           const Spacer(),
-          ...List.generate(
-            /// You cannot add more than 5 star or less than 0 star
-            totalStars > 5 || totalStars < 1 ? 5 : totalStars,
-            (index) => const Icon(Icons.star_rounded, color: Color(0xFFFFC107)),
+          RatingBarIndicator(
+            itemBuilder: (context, index) => Icon(Icons.star, color: Colors.amber),
+            rating: 3,
+            itemCount: 5,
+            itemSize: 17,
           ),
           const Icon(
             Icons.arrow_forward_ios_rounded,
