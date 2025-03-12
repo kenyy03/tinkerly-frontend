@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/common/components/network_image.dart';
+import 'package:mobile_frontend/src/features/professionalitem/components/custom_choice_chip_list.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
 
 class ProfessionalItemTileSquare extends StatelessWidget {
@@ -18,7 +19,11 @@ class ProfessionalItemTileSquare extends StatelessWidget {
         color: AppColors.scaffoldBackground,
         child: InkWell(
           borderRadius: AppDefaults.borderRadius,
-          onTap: () => context.push(AppRoutes.profileDetails),
+          onTap: () => 
+            context.push(
+              '${AppRoutes.profileItems}${AppRoutes.profileDetails}', 
+              extra: data.toJson()
+            ),
           child: Container(
             width: 176,
             height: 296,
@@ -72,7 +77,7 @@ class ProfessionalItemTileSquare extends StatelessWidget {
                   width: MediaQuery.of(context).size.shortestSide,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: _CustomChoiceChipList(data: data),
+                    child: CustomChoiceChipList(data: data),
                   ),
                 ),
                 Spacer(),
@@ -97,37 +102,6 @@ class ProfessionalItemTileSquare extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _CustomChoiceChipList extends StatelessWidget {
-  const _CustomChoiceChipList({
-    required this.data,
-  });
-
-  final UserPublic data;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: List.generate(
-        3,
-        (index) {
-          return Container(
-            margin: EdgeInsets.only(right: AppDefaults.padding),
-            child: ChoiceChip(
-              label: Text(
-                data.userAbilities[index].ability.description, 
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.bold
-                )
-              ), 
-              selected: false
-            ),
-          );
-        }, 
-      )
     );
   }
 }

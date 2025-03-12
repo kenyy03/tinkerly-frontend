@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:mobile_frontend/src/features/professionalitem/components/professional_item_tile_square.dart';
 import 'package:mobile_frontend/src/features/professionalitem/cubit/professional_cubit.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
