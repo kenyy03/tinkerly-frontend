@@ -19,14 +19,14 @@ class UserOcupation {
     id: json["_id"],
     userId: json["userId"],
     ocupation: Ocupation.fromMap(json["ocupationId"] ?? {}),
-    hourlyRate: double.tryParse(json["hourlyRate"]['\$numberDecimal']) ?? 0.0 ,
-    serviceFee: double.tryParse(json["serviceFee"]['\$numberDecimal']) ?? 0.0 ,
+    hourlyRate: double.tryParse(json["hourlyRate"].toString()) ?? 0.0 ,
+    serviceFee: double.tryParse(json["serviceFee"].toString()) ?? 0.0 ,
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
     "userId": userId,
-    "ocupationId": ocupation.id,
+    "ocupationId": ocupation.toJson(),
     "hourlyRate": hourlyRate,
     "serviceFee": serviceFee,
   };

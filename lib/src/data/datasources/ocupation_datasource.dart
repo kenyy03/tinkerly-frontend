@@ -49,7 +49,7 @@ class OcupationDataSource extends IOcupationDataSource {
   Future<bool> assignOcupationToUser({required UserOcupation userOcupation}) async {
     try {
       Uri uri = Uri.parse('${environment.baseUrl}/ocupation/assign-ocupation-to-user');
-      final String requestJson = json.encode(userOcupation.toJson());
+      final String requestJson = json.encode({...userOcupation.toJson(), 'ocupationId': userOcupation.ocupation.id});
       final response = await http.post(
         uri,
         headers: { 'Content-Type': 'application/json', },

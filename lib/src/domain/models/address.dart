@@ -29,7 +29,7 @@ class Address {
     "userId": userId,
     "neighborhood": neighborhood,
     "directions": directions,
-    'cityId': city.id,
+    'cityId': city.toJson(),
   };
 
   Address copyWith({

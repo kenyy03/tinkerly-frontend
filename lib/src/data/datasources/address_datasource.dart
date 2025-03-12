@@ -30,7 +30,7 @@ class AddressDataSource extends IAddressDataSource {
   Future<Address> saveAddress({required Address addressRequest}) async {
     try {
       Uri uri = Uri.parse('${environment.baseUrl}/save-address');
-      String body = json.encode(addressRequest.toJson());
+      String body = json.encode({...addressRequest.toJson(), 'cityId': addressRequest.city.id });
       final response = await http.post(
         uri,
         headers: { 'Content-Type': 'application/json', },
