@@ -12,7 +12,7 @@ class PopularUsers extends StatelessWidget {
     required this.usersData
   });
 
-  final List<UserForResumeDto> usersData;
+  final List<UserPublic> usersData;
 
   @override
   Widget build(BuildContext context) {
