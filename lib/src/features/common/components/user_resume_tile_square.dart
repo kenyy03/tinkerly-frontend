@@ -10,7 +10,7 @@ class UserResumeTileSquare extends StatelessWidget {
     required this.data,
   });
 
-  final UserForResumeDto data;
+  final UserPublic data;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,10 @@ class UserResumeTileSquare extends StatelessWidget {
       borderRadius: AppDefaults.borderRadius,
       child: InkWell(
         onTap: () {
-          context.push(AppRoutes.profileDetails);
+          context.push(
+            '${AppRoutes.profileItems}${AppRoutes.profileDetails}',
+            extra: data.toJson()
+          );
         },
         borderRadius: AppDefaults.borderRadius,
         child: Container(
