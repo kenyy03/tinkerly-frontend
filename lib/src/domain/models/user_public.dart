@@ -49,10 +49,10 @@ class UserPublic {
     role: Role.fromMap(json['roleId']),
     imageProfile: ImageProfile.fromMap(json['imageProfile'] ?? ImageProfile().toJson()),
     isPublicProfile: json['isPublicProfile'] ?? false,
-    address: Address.fromMap(json['address']),
-    userOcupation: UserOcupation.fromMap(json['userOcupation']),
-    userAbilities: List.from(json['userAbilities']).map((e) => UserAbility.fromMap(e)).toList(),
-    reviews: List.from(json['reviews']).map((e) => Review.fromMap(e)).toList(),
+    address: Address.fromMap(json['address'] ?? Address().toJson() ),
+    userOcupation: UserOcupation.fromMap(json['userOcupation'] ?? UserOcupation().toJson()),
+    userAbilities: List.from(json['userAbilities'] ?? []).map((e) => UserAbility.fromMap(e)).toList(),
+    reviews: List.from(json['reviews'] ?? [] ).map((e) => Review.fromMap(e)).toList(),
     averageRating: double.tryParse(json['averageRating'].toString()) ?? 0.0
   );
 

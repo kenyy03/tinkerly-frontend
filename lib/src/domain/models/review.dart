@@ -1,29 +1,37 @@
+import '../domain.dart';
+
 class Review {
   final String id;
-  final String reviewerId;
+  final User reviewerId;
   final String reviewedId;
-  final int rating;
+  final double rating;
   final String comment;
 
   Review({
     this.id = '', 
-    this.reviewerId = '', 
+    User? reviewerId, 
     this.reviewedId = '', 
-    this.rating = 0, 
+    this.rating = 0.0, 
     this.comment = '',
-  });
+  }) : reviewerId = reviewerId ?? User(
+    names: '', 
+    lastNames: '', 
+    email: '', 
+    password: '', 
+    phone: ''
+  );
 
   factory Review.fromMap(Map<String, dynamic> json) => Review(
     id: json["_id"],
-    reviewerId: json["reviewerId"],
+    reviewerId: User.fromMap(json["reviewerId"]),
     reviewedId: json["reviewedId"],
-    rating: json["rating"],
+    rating: double.tryParse(json["rating"].toString()) ?? 0.0,
     comment: json["comment"],
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "reviewerId": reviewerId,
+    "reviewerId": reviewerId.toJson(),
     "reviewedId": reviewedId,
     "rating": rating,
     "comment": comment,
@@ -31,9 +39,9 @@ class Review {
 
   Review copyWith({
     String? id, 
-    String? reviewerId, 
+    User? reviewerId, 
     String? reviewedId, 
-    int? rating, 
+    double? rating, 
     String? comment
   }){
     return Review(
