@@ -28,7 +28,7 @@ class ProfileEditPage extends StatelessWidget {
       appBar: AppBar(
         leading: const AppBackButton(),
         title: const Text(
-          'Profile',
+          'Editar mi perfil',
         ),
       ),
       body: BlocListener<MyprofileEditBloc, MyprofileEditState>(
@@ -191,7 +191,7 @@ class ProfileEditPage extends StatelessWidget {
                     TextFormField(
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
-                      maxLines: 2,
+                      maxLines: 3,
                       onChanged: onChangedDescription,
                       controller: _descriptionController,
                       enableSuggestions: false,
