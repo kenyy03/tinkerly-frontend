@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile_frontend/src/data/datasources/review_datasource.dart';
 import 'package:mobile_frontend/src/data/infrastructure.dart';
+import 'package:mobile_frontend/src/data/repositories/review_repository.dart';
 import 'package:mobile_frontend/src/domain/domain.dart';
 import 'package:mobile_frontend/src/features/entrypoint/entry_point_ui.dart';
 import 'package:mobile_frontend/src/features/home/cubit/home_cubit.dart';
@@ -10,6 +13,8 @@ import 'package:mobile_frontend/src/features/joinas/join_as_screen.dart';
 import 'package:mobile_frontend/src/features/login/bloc/login_bloc.dart';
 import 'package:mobile_frontend/src/features/login/login_screen.dart';
 import 'package:mobile_frontend/src/features/professionaldetails/professional_details_screen.dart';
+import 'package:mobile_frontend/src/features/reviews/cubit/review_cubit.dart';
+import 'package:mobile_frontend/src/features/reviews/review_screen.dart';
 import 'package:mobile_frontend/src/features/professionalitem/cubit/professional_cubit.dart';
 import 'package:mobile_frontend/src/features/professionalitem/professional_item_screen.dart';
 import 'package:mobile_frontend/src/features/profilemenu/cubits/imageprofilecubit/image_picker_profile_cubit.dart';
@@ -82,7 +87,7 @@ final router = GoRouter(
               BlocProvider(
                 create: (context) => HomeCubit(
                   authRepository: AuthRepository(datasource: AuthDataSource()) 
-                )
+                )..getUsersHome()
               ),
               BlocProvider(
                 create: (context) => SwitchCubit(
@@ -94,6 +99,13 @@ final router = GoRouter(
                   authRepository: AuthRepository(datasource: AuthDataSource())
                 )..getPublicUsers(),
               ),
+              BlocProvider(
+                create: (context) {
+                  return ReviewCubit(
+                    reviewRepository: ReviewRepository(dataSource: ReviewDatasource())
+                  );
+                },
+              ),
             ],
             child: EntryPointUi(navigationShell: navigationShell),
           );
@@ -104,13 +116,13 @@ final router = GoRouter(
               name: HomenScreen.routeName,
               path: AppRoutes.home,
               builder: (context, state){
-                context.read<HomeCubit>().getUsersHome(); 
                 return HomenScreen();
               }
             )
           ]),
-          StatefulShellBranch(routes: [
-            GoRoute(
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
                 name: ProfileScreen.routeName,
                 path: AppRoutes.profile,
                 builder: (context, state) => ProfileScreen(),
@@ -138,8 +150,10 @@ final router = GoRouter(
                       return DirectionsScreen(currentUserId: userId);
                     },
                   ),
-                ]),
-          ]),
+                ]
+              ),
+            ]
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -156,6 +170,17 @@ final router = GoRouter(
                       final currentUserSelected = UserPublic.fromMap((state.extra as Map<String,dynamic>));
                       return ProfessionalDetailsScreen(userSelected: currentUserSelected);
                     },
+                    routes: [
+                      GoRoute(
+                        path: AppRoutes.review,
+                        name: ReviewScreen.routeName,
+                        builder: (context, state) {
+                          final reviewsDeserialized = List.from(json.decode(state.extra as String));
+                          final reviews = reviewsDeserialized.map((e) => Review.fromMap(e)).toList();
+                          return ReviewScreen(reviews: reviews);
+                        },
+                      )
+                    ]
                   )
                 ]
               ),
