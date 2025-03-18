@@ -117,17 +117,17 @@ class ProfessionalDetailsView extends StatelessWidget {
               ),
             ),
               
-            const SizedBox(height: 8),
+            const SizedBox(height: 2),
             /// Review Row
-            const Padding(
-              padding: EdgeInsets.symmetric(
+            Padding(
+              padding: const EdgeInsets.symmetric(
                 horizontal: AppDefaults.padding,
               ),
               child: Column(
                 children: [
-                  Divider(thickness: 0.1),
-                  ReviewRowButton(totalStars: 5),
-                  Divider(thickness: 0.1),
+                  const Divider(thickness: 0.1),
+                  ReviewRowButton(totalStars: userSelected.averageRating, reviews: userSelected.reviews ),
+                  const Divider(thickness: 0.1),
                 ],
               ),
             ),
