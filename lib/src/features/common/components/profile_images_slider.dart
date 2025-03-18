@@ -1,5 +1,5 @@
 import 'network_image.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_frontend/src/features/professionaldetails/components/animated_dots.dart';
 import 'package:mobile_frontend/src/utils/constants/constants.dart';
@@ -61,7 +61,7 @@ class _ProfileImagesSliderState extends State<ProfileImagesSlider> {
                         aspectRatio: 1 / 1,
                         child: NetworkImageWithLoader(
                           images[index],
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     );
@@ -78,26 +78,26 @@ class _ProfileImagesSliderState extends State<ProfileImagesSlider> {
               )
             ],
           ),
-          Positioned(
-            right: 0,
-            child: Material(
-              color: Colors.transparent,
-              borderRadius: AppDefaults.borderRadius,
-              child: IconButton(
-                onPressed: () {},
-                iconSize: 56,
-                constraints: const BoxConstraints(minHeight: 56, minWidth: 56),
-                icon: Container(
-                  padding: const EdgeInsets.all(AppDefaults.padding),
-                  decoration: const BoxDecoration(
-                    color: AppColors.scaffoldBackground,
-                    shape: BoxShape.circle,
-                  ),
-                  child: SvgPicture.asset(AppIcons.heart),
-                ),
-              ),
-            ),
-          )
+          // Positioned(
+          //   right: 0,
+          //   child: Material(
+          //     color: Colors.transparent,
+          //     borderRadius: AppDefaults.borderRadius,
+          //     child: IconButton(
+          //       onPressed: () {},
+          //       iconSize: 56,
+          //       constraints: const BoxConstraints(minHeight: 56, minWidth: 56),
+          //       icon: Container(
+          //         padding: const EdgeInsets.all(AppDefaults.padding),
+          //         decoration: const BoxDecoration(
+          //           color: AppColors.scaffoldBackground,
+          //           shape: BoxShape.circle,
+          //         ),
+          //         child: SvgPicture.asset(AppIcons.heart),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
