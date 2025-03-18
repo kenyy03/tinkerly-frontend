@@ -28,7 +28,7 @@ class AuthRepository extends IAuthRepository {
   }
   
   @override
-  Future<List<UserForResumeDto>> getUserForHomeResume() {
+  Future<List<UserPublic>> getUserForHomeResume() {
     return _datasource.getUserForHomeResume();
   }
   

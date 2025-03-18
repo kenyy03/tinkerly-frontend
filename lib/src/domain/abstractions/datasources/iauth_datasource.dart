@@ -7,7 +7,7 @@ abstract class IAuthDataSource {
   Future<User> login({required String email,required String password});
   Future<User> uploadImageProfile({required File file,required String id});
   Future<User> updateUser({required User user, bool isDelete});
-  Future<List<UserForResumeDto>> getUserForHomeResume();
+  Future<List<UserPublic>> getUserForHomeResume();
   Future<User> publishProfile({ required bool isPublicProfile, required String userId });
   Future<List<UserPublic>> getUsersByIsPublicProfile();
 }

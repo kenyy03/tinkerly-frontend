@@ -123,7 +123,7 @@ class AuthDataSource extends IAuthDataSource {
   }
 
   @override
-  Future<List<UserForResumeDto>> getUserForHomeResume() async {
+  Future<List<UserPublic>> getUserForHomeResume() async {
     try {
       Uri uri = Uri.parse('${environment.baseUrl}/get-public-users-for-resume');
       final response = await http.get(
@@ -137,7 +137,7 @@ class AuthDataSource extends IAuthDataSource {
 
       final jsonResponse = json.decode(response.body) as Map<String,dynamic>;
       final usersResponse = List.from(jsonResponse['data']);
-      final usersHome = usersResponse.map((e) => UserForResumeDto.fromMap(e)).toList();
+      final usersHome = usersResponse.map((e) => UserPublic.fromMap(e)).toList();
       final stored = UsersStorage();
       await stored.save('usersHome', usersHome);
       return usersHome;
