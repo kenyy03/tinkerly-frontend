@@ -84,7 +84,7 @@ class _UserDataState extends State<_UserData> {
           currentUser = currentUser!.copyWith(
             imageProfile: currentUser!.imageProfile.copyWith(url: state.imageProfilePath) 
           );
-          await Future.delayed(Duration(milliseconds: 150));
+          await Future.delayed(Duration(milliseconds: 200));
           setState(() {});
         }
       },
